@@ -1,6 +1,3 @@
-
-
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -30,6 +27,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
+import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 /**
  * This 2019-2020 OpMode illustrates the basics of using the Vuforia localizer to determine
@@ -42,7 +40,6 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  *
  * From the Audience perspective, the Red Alliance station is on the right and the
  * Blue Alliance Station is on the left.
-
  * Eight perimeter targets are distributed evenly around the four perimeter walls
  * Four Bridge targets are located on the bridge uprights.
  * Refer to the Field Setup manual for more specific location details
@@ -62,7 +59,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  */
 
 
-@TeleOp(name="SKYSTONEVuforiaNavLOTB", group ="Concept")
+@Autonomous(name="victor|vuforia|mechnum", group ="Concept")
 public class Vuforia_mecnum_moving extends LinearOpMode {
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
@@ -71,7 +68,7 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     //
     // NOTE: If you are running on a CONTROL HUB, with only one USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     //
-    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
+    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -88,9 +85,12 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     private static final String VUFORIA_KEY =
             "AS34pyX/////AAAAGaIrZJw2gU9xsxqfbnnb+NRMmLab5C2kQ5nc5YQr0V2hS3svZx7pBKzTz+ivN1giF42Wv8bBcm9gKE69/IPfrHT/nmBsKSyBmg5x0lkmlzYZ16vcd8R8hR6+q97ki1Sn/tjGlKalYvYSL+326CcR1EiJ3C7dWYujBqTJwsqySEXcqrn4ieiQJ4lY8/+U6dBTx/OkBvXxAMgJHl+Qjz5o6TUtQX4WolbO9mOD0bZFdTwSwyzycdKDNXLUjABOcdnx2foEvJqcVPOCfHEh8FEZRHpDB5RLgIqF1kwxCfFXx7MVflrtoLet/e6l9PdmC8nIk5Oo9cC9C6hF8L79A52YouscEKTWVx9pmqPgRYDhXUux";
 
-
-    /* Declare OpMode members. */
-    HardwareBotPush         robot   = new HardwareBotPush();   // Use a Pushbot's hardware
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: DC Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    LOTBHardware1         robot   = new LOTBHardware1();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
@@ -127,11 +127,15 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     @Override public void runOpMode() {
 
         robot.init(hardwareMap);
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
-         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
-         */
+
+        waitForStart();
+
+
+        robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.Right_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -333,16 +337,14 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                robot.leftDrive.setPower(FORWARD_SPEED);
-                robot.rightDrive.setPower(FORWARD_SPEED);
+
                 runtime.reset();
 
                 while ( opModeIsActive() && (runtime.seconds() < 0.25)) {
                     telemetry.addData("Forward_Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
                 }
-                robot.leftDrive.setPower(0);
-                robot.rightDrive.setPower(0);
+
             }
             //}
 
@@ -356,16 +358,20 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                encoderDrive(.5,12,12,12,12,3);
             }
             else {
                 telemetry.addData("Visible Target", "none");
 
                 // Step 2:  Spin right for 1.3 seconds
+               encoderDrive(.5,12,-12,12,-12,3);
                 /*robot.leftDrive.setPower(TURN_SPEED);
                 robot.rightDrive.setPower(-TURN_SPEED);
                 runtime.reset();
                 while (opModeIsActive() && (runtime.seconds() < 1.3)) {
                     telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+
+
                     telemetry.update();
                 }*/
 
@@ -379,6 +385,75 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
         targetsSkyStone.deactivate();
     }
 
+    public void encoderDrive ( double speed,
+                               double Left_Bottom_Inches,
+                               double Right_Bottom_Inches,
+                               double Right_Top_Inches,
+                               double Left_Top_Inches,
+                               double timeoutS){
+        int newLeftBottomTarget;
+        int newRightBottomTarget;
+        int newRightTopTarget;
+        int newLeftTopTarget;
 
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+
+            // Determine new target position, and pass to motor controller
+            newLeftBottomTarget = robot.Left_Bottom.getCurrentPosition() + (int) (Left_Bottom_Inches * COUNTS_PER_INCH);
+            newRightBottomTarget = robot.Right_Bottom.getCurrentPosition() + (int) (Right_Bottom_Inches * COUNTS_PER_INCH);
+            newRightTopTarget = robot.Right_Top.getCurrentPosition() + (int) (Right_Top_Inches * COUNTS_PER_INCH);
+            newLeftTopTarget = robot.Left_Top.getCurrentPosition() + (int) (Left_Top_Inches * COUNTS_PER_INCH);
+
+            robot.Left_Bottom.setTargetPosition(newLeftBottomTarget);
+            robot.Right_Bottom.setTargetPosition(newRightBottomTarget);
+            robot.Right_Top.setTargetPosition(newRightTopTarget);
+            robot.Left_Top.setTargetPosition(newLeftTopTarget);
+
+            // Turn On RUN_TO_POSITION
+            robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.Left_Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.Right_Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            robot.Left_Bottom.setPower(Math.abs(speed));
+            robot.Right_Bottom.setPower(Math.abs(speed));
+            robot.Left_Top.setPower(Math.abs(speed));
+            robot.Right_Top.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.Left_Bottom.isBusy() && robot.Right_Bottom.isBusy() && robot.Left_Top.isBusy() && robot.Right_Top.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftBottomTarget, newRightBottomTarget, newLeftTopTarget, newRightTopTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
+                        robot.Left_Bottom.getCurrentPosition(),
+                        robot.Right_Bottom.getCurrentPosition());
+                robot.Left_Top.getCurrentPosition();
+                robot.Right_Top.getCurrentPosition();
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            robot.Left_Bottom.setPower(0);
+            robot.Right_Bottom.setPower(0);
+            robot.Left_Top.setPower(0);
+            robot.Right_Top.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.Right_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //  sleep(250);   // optional pause after each move
+
+        }
+    }
 
 }
