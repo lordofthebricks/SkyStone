@@ -325,7 +325,7 @@ public class GimliAuastoNew extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                encoderDrive(0,0,0,0,0,6);
+                encoderDrive(.3,.75,-.75,.75,-.75,6);
                 robot.Shoulder.setPosition(.5);
                 robot.Wrist.setPosition(1);
 
@@ -334,7 +334,7 @@ public class GimliAuastoNew extends LinearOpMode {
                 telemetry.addData("Visible Target", "none");
 
 
-                encoderDrive(.1,-4,4,-4,4,6);
+                encoderDrive(.3,.75,-.75,.75,-.75,6);
 
 
 

@@ -131,7 +131,7 @@ public class GimliteleopNewVictor extends LinearOpMode {
 
             }
             if (gamepad1.right_bumper) {
-                robot.Wrist.setPosition(.1);
+                robot.Wrist.setPosition(0);
             } else if (gamepad1.left_bumper) {
                 robot.Wrist.setPosition(1);
             }
