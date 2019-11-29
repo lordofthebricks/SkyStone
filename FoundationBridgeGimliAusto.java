@@ -1,19 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import java.lang.Math;
 
 @Autonomous(name="Gimli  Bridge foundation auto ", group="Gimli")
 public class FoundationBridgeGimliAusto extends LinearOpMode {
 
-    static final double COUNTS_PER_MOTOR_REV = 356.3;    // eg: DC Motor Encoder
+    static final double COUNTS_PER_MOTOR_REV = 1425.2;    // eg: DC Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 3.75;     // For figuring circumference
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            //first hundred digits of pi fr more accuracy
-            (WHEEL_DIAMETER_INCHES * 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
     Gimli_test_hardware robot = new Gimli_test_hardware();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -22,11 +23,18 @@ public class FoundationBridgeGimliAusto extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        encoderDrive(.3, 1, 1, 1, 1, 2);
-        robot.Wrist.setPosition(0);
-        encoderDrive(.3,-1,-1,-1,-1,2);
-        robot.Wrist.setPosition(1);
-        encoderDrive(.3,-2,2,-2,2,2);
+        while (robot.Lookie.getDistance(DistanceUnit.INCH) > 5) {
+            encoderDrive(1, -0.1, -0.1, -0.1, -0.1, 1.25);
+
+        }
+            sleep(500);
+            robot.Wrist.setPosition(.3);
+            sleep(1000);
+            encoderDrive(.3, 1, 1, 1, 1, .5);
+            robot.Wrist.setPosition(.1);
+            robot.Wrist.setPosition(1);
+            encoderDrive(.3, -2, 2, -2, 2, 2);
+
     }
 
     //encoder drive function
