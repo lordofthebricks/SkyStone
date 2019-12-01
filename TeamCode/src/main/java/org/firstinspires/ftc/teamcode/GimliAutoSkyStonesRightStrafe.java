@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import java.lang.Math;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,11 +14,13 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+//import org.firstinspires.ftc.teamcode.ServoTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,45 +32,10 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
-/**
- * This 2019-2020 OpMode illustrates the basics of using the Vuforia localizer to determine
- * positioning and orientation of robot on the SKYSTONE FTC field.
- * The code is structured as a LinearOpMode
- *
- * When images are located, Vuforia is able to determine the position and orientation of the
- * image relative to the camera.  This sample code then combines that information with a
- * knowledge of where the target images are on the field, to determine the location of the camera.
- *
- * From the Audience perspective, the Red Alliance station is on the right and the
- * Blue Alliance Station is on the left.
- * Eight perimeter targets are distributed evenly around the four perimeter walls
- * Four Bridge targets are located on the bridge uprights.
- * Refer to the Field Setup manual for more specific location details
- *
- * A final calculation then uses the location of the camera on the robot to determine the
- * robot's location and orientation on the field.
- *
- * @see VuforiaLocalizer
- * @see VuforiaTrackableDefaultListener
- * see  skystone/doc/tutorial/FTC_FieldCoordinateSystemDefinition.pdf
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
 
+@Autonomous(name="Right Strafe - Gimli Autonomous SkyStone", group="Gimli test")
+public class GimliAutoSkyStonesRightStrafe extends LinearOpMode {
 
-@Autonomous(name="victor|vuforia|mechnum", group ="Concept")
-public class Vuforia_mecnum_moving extends LinearOpMode {
-
-    // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
-    // 1) Camera Source.  Valid choices are:  BACK (behind screen) or FRONT (selfie side)
-    // 2) Phone Orientation. Choices are: PHONE_IS_PORTRAIT = true (portrait) or PHONE_IS_PORTRAIT = false (landscape)
-    //
-    // NOTE: If you are running on a CONTROL HUB, with only one USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
-    //
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
     /*
@@ -85,12 +53,13 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     private static final String VUFORIA_KEY =
             "AS34pyX/////AAAAGaIrZJw2gU9xsxqfbnnb+NRMmLab5C2kQ5nc5YQr0V2hS3svZx7pBKzTz+ivN1giF42Wv8bBcm9gKE69/IPfrHT/nmBsKSyBmg5x0lkmlzYZ16vcd8R8hR6+q97ki1Sn/tjGlKalYvYSL+326CcR1EiJ3C7dWYujBqTJwsqySEXcqrn4ieiQJ4lY8/+U6dBTx/OkBvXxAMgJHl+Qjz5o6TUtQX4WolbO9mOD0bZFdTwSwyzycdKDNXLUjABOcdnx2foEvJqcVPOCfHEh8FEZRHpDB5RLgIqF1kwxCfFXx7MVflrtoLet/e6l9PdmC8nIk5Oo9cC9C6hF8L79A52YouscEKTWVx9pmqPgRYDhXUux";
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: DC Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 356.3 ;    // eg: DC Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     WHEEL_DIAMETER_INCHES   = 3.75 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-    LOTBHardware1         robot   = new LOTBHardware1();   // Use a Pushbot's hardware
+            //first hundred digits of pi fr more accuracy
+            (WHEEL_DIAMETER_INCHES * 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
+    Gimli_test_hardware         robot   = new Gimli_test_hardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
@@ -127,9 +96,6 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     @Override public void runOpMode() {
 
         robot.init(hardwareMap);
-
-        waitForStart();
-
 
         robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -294,7 +260,7 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                 .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
 
-        /**  Let all the trackable listeners know where the phone is.  */
+        /*  Let all the trackable listeners know where the phone is.  */
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
@@ -312,8 +278,23 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
         // Tap the preview window to receive a fresh image.
 
         targetsSkyStone.activate();
+        boolean firstTime = true;
+
+        waitForStart();
+
         while (!isStopRequested()) {
 
+            while (robot.Lookie.getDistance(DistanceUnit.INCH) > 11 && firstTime) {
+                telemetry.addData("Distance to Stone ", robot.Lookie.getDistance(DistanceUnit.INCH));
+                telemetry.update();
+                //sleep(2000);
+                encoderDrive(-.75,-.75,-.75,-.75,-.75,0.5);
+                sleep(250);
+            }
+            telemetry.addData("Distance to Stone Less than 11 inches ", robot.Lookie.getDistance(DistanceUnit.INCH));
+            telemetry.addData("FirstTime Flag ", firstTime);
+            telemetry.update();
+            //sleep(250);
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
             VuforiaTrackable trackable = allTrackables.get(0);
@@ -337,14 +318,6 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                runtime.reset();
-
-                while ( opModeIsActive() && (runtime.seconds() < 0.25)) {
-                    telemetry.addData("Forward_Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
-
             }
             //}
 
@@ -354,31 +327,64 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                 VectorF translation = lastLocation.getTranslation();
                 telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                         translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
-
+                telemetry.update();
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                encoderDrive(.5,12,12,12,12,3);
+
+                //double y = translation.get(1) / mmPerInch;
+
+                //strafe to the right so the arm comes directly on top of the skystone.
+                double y = 18 / mmPerInch;
+                encoderDrive(0.3, y, -y, y, -y, 1.25);
+
+                //double x = translation.get(0) / mmPerInch;
+                telemetry.addData("Going Forward toward stone","");
+                telemetry.update();
+                sleep(500);
+                //go forward slightly
+                double x = -0.3;
+
+                encoderDrive(-0.25, x, x, x, x, 0.55);
+                sleep(500);
+                //Lower the shoulder and wrist to grab the skystone
+                robot.Shoulder.setPosition(1);
+                sleep(250);
+                robot.Wrist.setPosition(0);
+                sleep(250);
+                telemetry.addData("Found Target ", "true");
+                telemetry.update();
+                telemetry.addData("Going Backward","");
+                telemetry.update();
+                sleep(500);
+                //Drive the robot back
+                encoderDrive(0.3, .75, .75, .75, .75, 1.23);
+                sleep(250);
+                telemetry.addData("Strafing to the right","");
+                telemetry.update();
+                sleep(500);
+                //Strafe to the right and cross the bridge
+                encoderDrive(0.75, 0.75, -0.75, 0.75, -0.75, 4.5);
+                sleep(250);
+                //The robot needs to lift the arm to put the SkyStone on the foundation
+                robot.Wrist.setPosition(1);
+                sleep(250);
+                robot.Shoulder.setPosition(0);
+                //Strafe to the left and park under the bridge
+                encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
+
+                stop();
+
             }
             else {
                 telemetry.addData("Visible Target", "none");
-
-                // Step 2:  Spin right for 1.3 seconds
-               encoderDrive(.5,12,-12,12,-12,3);
-                /*robot.leftDrive.setPower(TURN_SPEED);
-                robot.rightDrive.setPower(-TURN_SPEED);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-
-
-                    telemetry.update();
-                }*/
-
-
-
+                telemetry.update();
+                //Strafe to the right
+                encoderDrive(.75,.75,-.75,.75,-.75,0.75);
+                sleep(250);
             }
             telemetry.update();
+            firstTime = false;
         }
 
         // Disable Tracking when we are done;
@@ -430,13 +436,11 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
                     (robot.Left_Bottom.isBusy() && robot.Right_Bottom.isBusy() && robot.Left_Top.isBusy() && robot.Right_Top.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newLeftBottomTarget, newRightBottomTarget, newLeftTopTarget, newRightTopTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        robot.Left_Bottom.getCurrentPosition(),
-                        robot.Right_Bottom.getCurrentPosition());
+                //telemetry.addData("Path1", "Running to %7d :%7d", newLeftBottomTarget, newRightBottomTarget, newLeftTopTarget, newRightTopTarget);
+                //telemetry.addData("Path2", "Running at %7d :%7d", robot.Left_Bottom.getCurrentPosition(), robot.Right_Bottom.getCurrentPosition());
                 robot.Left_Top.getCurrentPosition();
                 robot.Right_Top.getCurrentPosition();
-                telemetry.update();
+                //telemetry.update();
             }
 
             // Stop all motion;
@@ -457,3 +461,4 @@ public class Vuforia_mecnum_moving extends LinearOpMode {
     }
 
 }
+

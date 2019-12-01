@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.Locale;
 
 
-@TeleOp(name = "Gimli Use This Teleop Victor")
+@TeleOp(name = "Gimli Driver Control")
 
-public class GimliteleopNewVictor extends LinearOpMode {
+public class GimliteleopDriverControl extends LinearOpMode {
 
     double posWrist = 0.02;
     //Add double posShoulder Variable for the shoulder movement
@@ -131,14 +131,14 @@ public class GimliteleopNewVictor extends LinearOpMode {
 
             }
             if (gamepad1.right_bumper) {
-                robot.Wrist.setPosition(0);
+                robot.Shoulder.setPosition(0);
             } else if (gamepad1.left_bumper) {
                 robot.Wrist.setPosition(1);
             }
             if (gamepad1.left_trigger == 1) {
-                robot.Shoulder.setPosition(.3);
+                robot.Wrist.setPosition(0);
             } else if (gamepad1.right_trigger == 1) {
-                robot.Shoulder.setPosition(-.3);
+                robot.Shoulder.setPosition(1);
             }
             if (gamepad1.y) {
                 robot.Slider.setPower(.4);
