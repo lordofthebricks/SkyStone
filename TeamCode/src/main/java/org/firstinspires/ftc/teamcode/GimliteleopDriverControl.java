@@ -1,12 +1,7 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import java.util.Locale;
 
 
 @TeleOp(name = "Gimli Driver Control")
@@ -16,7 +11,7 @@ public class GimliteleopDriverControl extends LinearOpMode {
     double posWrist = 0.02;
     //Add double posShoulder Variable for the shoulder movement
 
-    Gimli_test_hardware robot = new Gimli_test_hardware();
+    Gimli_hardware robot = new Gimli_hardware();
 
     @Override
     public void runOpMode() throws InterruptedException {
