@@ -1,10 +1,15 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import java.util.Locale;
 
 
-@TeleOp(name = "Gimli Driver Control")
+@TeleOp(name = "GimliTeleopReal")
 
 public class GimliteleopDriverControl extends LinearOpMode {
 
@@ -122,16 +127,16 @@ public class GimliteleopDriverControl extends LinearOpMode {
             }
             //Fix Auto Stop!!!
             if (gamepad1.y) {
-                telemetry.addData("P0tat3r", "robot.Wrist.getPosition()");
+                telemetry.addData("Triforce", "Get the master");
 
             }
             if (gamepad1.right_bumper) {
-                robot.Shoulder.setPosition(0);
+                robot.Wrist.setPosition(0);
             } else if (gamepad1.left_bumper) {
                 robot.Wrist.setPosition(1);
             }
             if (gamepad1.left_trigger == 1) {
-                robot.Wrist.setPosition(0);
+                robot.Shoulder.setPosition(0);
             } else if (gamepad1.right_trigger == 1) {
                 robot.Shoulder.setPosition(1);
             }
