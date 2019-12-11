@@ -352,24 +352,37 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
 
                 //encoderDriveWithoutTime(-0.3, 0, 0, -0.5, 0);
 
-                //strafe to the right so the arm comes directly on top of the skystone.
+                //strafe to the left so the arm comes directly on top of the skystone.
                 double y = 11.5;//18 / mmPerInch;
-                if (strafeCount < 2) {
-                    y=8.75;
+                telemetry.addData("StrafeCount=",strafeCount);
+                telemetry.update();
+                sleep(50);
+                //stop();
+
+                if (strafeCount == 0) {
+                    y=8;
+                    encoderDriveWithoutTime(1, -y, y, -y, y);
 
                 }
-                if (strafeCount == 3){
+                /*if (strafeCount == 3){
                     y=11.5;
                 }
                 if (strafeCount > 3) {
                     y=13.75;
                 }
+                if(strafeCount > 0 && strafeCount <3)
+                {
+                    y = 0;
+                }
+                */
 
+                sleep(25);
                 //encoderDrive(0.3, y, -y, y, -y, 1.25);
                 double alignRobotDistRight = 3.75;
                 double alignRobotDistLeft = 3.5;
                 double alignRobotDistRightLess = 3.5;
                 double alignRobotDistLeftLess = 3.25;
+
                 /*if(strafeCount > 3) {
                     //Since the robot is not strafing correctly, we put this so the right_top wheel moves so the robot becomes straight
                     //telemetry.addData("The Robot is going forward (right_top and right_bottom)", "");
@@ -417,15 +430,27 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
                 sleep(50);
+                telemetry.addData("It is working", "");
+                telemetry.update();
                 //Strafe to the left and cross the bridge
                 //encoderDrive(0.75, 0.75, -0.75, 0.75, -0.75, 4.5);
                 double rightStrafeDist = 61;
                 double leftStrafeDist = 61;
 
-                if(strafeCount > 1 )
-                    encoderDriveWithoutTime(.75, -leftStrafeDist, rightStrafeDist, -rightStrafeDist, leftStrafeDist);
-                else
-                    encoderDriveWithoutTime(.75, -(leftStrafeDist + 8), (rightStrafeDist + 8), -(rightStrafeDist + 8), (leftStrafeDist + 8)   );
+                if(strafeCount > 1 ) {
+                    telemetry.addData("Inside if", "");
+                    telemetry.update();
+                    encoderDriveWithoutTime(1, -leftStrafeDist, rightStrafeDist, -rightStrafeDist, leftStrafeDist);
+                    telemetry.addData("After Drive Inside if", "");
+                    telemetry.update();
+                }
+                else {
+                    telemetry.addData("Inside else", "");
+                    telemetry.update();
+                    encoderDriveWithoutTime(1, -(leftStrafeDist + 8), (rightStrafeDist + 8), -(rightStrafeDist + 8), (leftStrafeDist + 8));
+                    telemetry.addData("After Drive Inside else", "");
+                    telemetry.update();
+                }
                 sleep(25);
                 //The robot needs to lift the arm to put the SkyStone on the foundation
                 telemetry.addData("Setting the block down and lifting the shoulder", "");

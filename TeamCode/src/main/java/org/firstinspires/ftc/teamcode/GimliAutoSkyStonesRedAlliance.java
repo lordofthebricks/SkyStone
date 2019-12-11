@@ -367,8 +367,8 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
                 //encoderDrive(0.3, y, -y, y, -y, 1.25);
                 encoderDriveWithoutTime(1, y, -y, y, -y);
-                double alignRobotDistRight = 3.75;
-                double alignRobotDistLeft = 3.5;
+                double alignRobotDistRight = 3.5;
+                double alignRobotDistLeft = 3.25;
                 double alignRobotDistRightLess = 3.5;
                 double alignRobotDistLeftLess = 3.25;
                 if(strafeCount > 3) {
@@ -413,7 +413,12 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                encoderDriveWithoutTime(0.5, 10, 10, 10, 10 );
+                if (strafeCount > 4) {
+                    encoderDriveWithoutTime(0.5, 13, 13, 13, 13 );
+                }
+                else
+                    encoderDriveWithoutTime(0.5, 11, 11, 11, 11 );
+
                 sleep(25);
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
@@ -439,8 +444,8 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 sleep(500);
                 robot.Wrist.setPosition(0);
                 sleep(500);
-                double leftStrafeUnderBridgeDist = 25;
-                double rightStrafeUnderBridgeDist = 25;
+                double leftStrafeUnderBridgeDist = 23;
+                double rightStrafeUnderBridgeDist = 23;
 
                 //Strafe to the left and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
