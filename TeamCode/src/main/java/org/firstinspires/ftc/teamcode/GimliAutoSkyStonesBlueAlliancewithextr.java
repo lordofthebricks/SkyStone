@@ -440,6 +440,23 @@ public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
                 sleep(500);
                 double leftStrafeUnderBridgeDist = 19;
                 double rightStrafeUnderBridgeDist = 19;
+                //moves forward
+                encoderDrive(.3,-5,-5,-5,-5,6);
+                /*moves sideways*/
+                encoderDrive(.3,46.5,-46.5,46.5,-46.5,6);
+                double Speed = 0.3;
+                double InchesForeward = 30;
+                double InchesSideWays = -52;
+
+                robot.Shoulder.setPosition(.1);
+                robot.Slider.setPower(0.4);
+                sleep(1000);
+                robot.Slider.setPower(0);
+                encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
+                //grabs foundation w/ slider
+                robot.Slider.setPower(-0.3);
+                sleep(1000);
+                robot.Slider.setPower(0);
 
                 //Strafe to the right and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
