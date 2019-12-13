@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 //import org.firstinspires.ftc.teamcode.ServoTest;
 
-
+@Disabled
 @Autonomous(name="BlueSkyStoneFoundatioPlace", group="Gimli test")
 public class GimliAutoSkyStonesBlueAllianceputonfoundation extends LinearOpMode {
 

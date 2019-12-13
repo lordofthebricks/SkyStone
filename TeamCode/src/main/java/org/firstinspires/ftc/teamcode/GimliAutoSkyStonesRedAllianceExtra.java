@@ -413,9 +413,10 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                if (strafeCount > 4) {
+                if (strafeCount > 2) {
                     encoderDriveWithoutTime(0.5, 13, 13, 13, 13 );
                 }
+
                 else
                     encoderDriveWithoutTime(0.5, 11, 11, 11, 11 );
 
@@ -455,18 +456,22 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
                 else {
                     encoderDriveWithoutTime(1, -(leftStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), leftStrafeUnderBridgeDist + 1);
                 }
-*/
+*/              double inchesSidewayWays = 0;
+                if (strafeCount == 0){
+                     inchesSidewayWays = 20;
+                }
+                else {
+                    inchesSidewayWays = 52;
+                }
+                double Speed = 0.3;
+                double InchesForeward = 12;
 
-
-                /*double Speed = 0.3;
-                double InchesForeward = 30;
-                double InchesSideWays = 52;
                 robot.Shoulder.setPosition(.1);
                 waitForStart();
                 robot.Slider.setPower(0.4);
                 sleep(1000);
                 robot.Slider.setPower(0);
-                encoderDrive(Speed,InchesSideWays, -InchesSideWays, InchesSideWays, -InchesSideWays, 9);
+                encoderDrive(Speed,inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, 9);
                 encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
                 //grabs foundation w/ slider
                 sleep(1000);
@@ -480,9 +485,9 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
                 sleep(1000);
                 robot.Slider.setPower(0);
                 robot.Shoulder.setPosition(.5);
-                encoderDrive(Speed, -InchesSideWays, InchesSideWays, -InchesSideWays, InchesSideWays, 9);
+                encoderDrive(Speed, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, 9);
 
-            */
+
 
                 stop();
 
