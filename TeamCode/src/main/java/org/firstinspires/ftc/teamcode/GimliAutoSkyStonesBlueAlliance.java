@@ -352,7 +352,7 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
 
                 //encoderDriveWithoutTime(-0.3, 0, 0, -0.5, 0);
 
-                //strafe to the left so the arm comes directly on top of the skystone.
+                //strafe to the Right so the arm comes directly on top of the skystone.
                 double y = 11.5;//18 / mmPerInch;
                 telemetry.addData("StrafeCount=",strafeCount);
                 telemetry.update();
@@ -361,13 +361,14 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
 
                 if (strafeCount == 0) {
                     y=8;
-                    encoderDriveWithoutTime(1, -y, y, -y, y);
+                    encoderDriveWithoutTime(1, y, -y, y, -y);
 
                 }
-                /*if (strafeCount == 3){
-                    y=11.5;
+                if (strafeCount == 3){
+                    y=6;
+                    encoderDriveWithoutTime(1, y, -y, y, -y);
                 }
-                if (strafeCount > 3) {
+                /*if (strafeCount > 3) {
                     y=13.75;
                 }
                 if(strafeCount > 0 && strafeCount <3)

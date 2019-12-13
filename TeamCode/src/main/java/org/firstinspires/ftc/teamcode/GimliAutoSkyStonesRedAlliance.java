@@ -413,9 +413,10 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                if (strafeCount > 4) {
+                if (strafeCount > 2) {
                     encoderDriveWithoutTime(0.5, 13, 13, 13, 13 );
                 }
+
                 else
                     encoderDriveWithoutTime(0.5, 11, 11, 11, 11 );
 
