@@ -28,8 +28,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 //import org.firstinspires.ftc.teamcode.ServoTest;
 
 
-@Autonomous(name="BlueGimliSkyStone", group="Gimli test")
-public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
+@Autonomous(name="Blue Alliance - Gimli Autonomous SkyStone", group="Gimli test")
+public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
@@ -352,24 +352,37 @@ public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
 
                 //encoderDriveWithoutTime(-0.3, 0, 0, -0.5, 0);
 
-                //strafe to the right so the arm comes directly on top of the skystone.
+                //strafe to the left so the arm comes directly on top of the skystone.
                 double y = 11.5;//18 / mmPerInch;
-                if (strafeCount < 2) {
-                    y=8.75;
+                telemetry.addData("StrafeCount=",strafeCount);
+                telemetry.update();
+                sleep(50);
+                //stop();
+
+                if (strafeCount == 0) {
+                    y=8;
+                    encoderDriveWithoutTime(1, -y, y, -y, y);
 
                 }
-                if (strafeCount == 3){
+                /*if (strafeCount == 3){
                     y=11.5;
                 }
                 if (strafeCount > 3) {
                     y=13.75;
                 }
+                if(strafeCount > 0 && strafeCount <3)
+                {
+                    y = 0;
+                }
+                */
 
+                sleep(25);
                 //encoderDrive(0.3, y, -y, y, -y, 1.25);
                 double alignRobotDistRight = 3.75;
                 double alignRobotDistLeft = 3.5;
                 double alignRobotDistRightLess = 3.5;
                 double alignRobotDistLeftLess = 3.25;
+
                 /*if(strafeCount > 3) {
                     //Since the robot is not strafing correctly, we put this so the right_top wheel moves so the robot becomes straight
                     //telemetry.addData("The Robot is going forward (right_top and right_bottom)", "");
@@ -417,15 +430,27 @@ public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
                 sleep(50);
+                telemetry.addData("It is working", "");
+                telemetry.update();
                 //Strafe to the left and cross the bridge
                 //encoderDrive(0.75, 0.75, -0.75, 0.75, -0.75, 4.5);
                 double rightStrafeDist = 61;
                 double leftStrafeDist = 61;
 
-                if(strafeCount > 1 )
-                    encoderDriveWithoutTime(.75, -leftStrafeDist, rightStrafeDist, -rightStrafeDist, leftStrafeDist);
-                else
-                    encoderDriveWithoutTime(.75, -(leftStrafeDist + 8), (rightStrafeDist + 8), -(rightStrafeDist + 8), (leftStrafeDist + 8)   );
+                if(strafeCount > 1 ) {
+                    telemetry.addData("Inside if", "");
+                    telemetry.update();
+                    encoderDriveWithoutTime(1, -leftStrafeDist, rightStrafeDist, -rightStrafeDist, leftStrafeDist);
+                    telemetry.addData("After Drive Inside if", "");
+                    telemetry.update();
+                }
+                else {
+                    telemetry.addData("Inside else", "");
+                    telemetry.update();
+                    encoderDriveWithoutTime(1, -(leftStrafeDist + 8), (rightStrafeDist + 8), -(rightStrafeDist + 8), (leftStrafeDist + 8));
+                    telemetry.addData("After Drive Inside else", "");
+                    telemetry.update();
+                }
                 sleep(25);
                 //The robot needs to lift the arm to put the SkyStone on the foundation
                 telemetry.addData("Setting the block down and lifting the shoulder", "");
@@ -440,23 +465,6 @@ public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
                 sleep(500);
                 double leftStrafeUnderBridgeDist = 19;
                 double rightStrafeUnderBridgeDist = 19;
-                //moves forward
-                encoderDrive(.3,-5,-5,-5,-5,6);
-                /*moves sideways*/
-                encoderDrive(.3,46.5,-46.5,46.5,-46.5,6);
-                double Speed = 0.3;
-                double InchesForeward = 30;
-                double InchesSideWays = -52;
-
-                robot.Shoulder.setPosition(.1);
-                robot.Slider.setPower(0.4);
-                sleep(1000);
-                robot.Slider.setPower(0);
-                encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
-                //grabs foundation w/ slider
-                robot.Slider.setPower(-0.3);
-                sleep(1000);
-                robot.Slider.setPower(0);
 
                 //Strafe to the right and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
@@ -481,42 +489,11 @@ public class GimliAutoSkyStonesBlueAlliancewithextr extends LinearOpMode {
             }
             telemetry.update();
             firstTime = false;
-
-            //moves forward
-            encoderDrive(.3,-5,-5,-5,-5,6);
-            /*moves sideways*/
-            encoderDrive(.3,46.5,-46.5,46.5,-46.5,6);
-            double Speed = 0.3;
-            double InchesForeward = 30;
-            double InchesSideWays = -52;
-            robot.Shoulder.setPosition(.1);
-
-            robot.Slider.setPower(0.4);
-            sleep(1000);
-            robot.Slider.setPower(0);
-            encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
-            //grabs foundation w/ slider
-            robot.Slider.setPower(-0.3);
-            sleep(1000);
-            robot.Slider.setPower(0);
-
-            //remove 0.5 from InchesForeword
-            //InchesForeward = InchesForeward-0.25;
-            encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
-            robot.Slider.setPower(0.3);
-            sleep(1000);
-            robot.Slider.setPower(0);
-            robot.Shoulder.setPosition(.5);
-            encoderDrive(Speed, -InchesSideWays, InchesSideWays, -InchesSideWays, InchesSideWays, 9);
-
         }
 
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
-
     }
-
-
 
     public void encoderDrive ( double speed,
                                double Left_Bottom_Inches,
