@@ -291,6 +291,11 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
         while (!isStopRequested()) {
             if(firstTime)
             {
+
+                //go forward for 24 inches with variable
+                encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
+                sleep(25);
+
                 encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
                 sleep(25);
                 double p = 10.5;
@@ -299,9 +304,7 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
 
 
 
-                //go forward for 24 inches with variable
-                encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
-                sleep(25);
+
             }
             //Sometimes the shoulder is falling so we have to reset it. Wrist up=0. Wrist down=1. Shoulder up=0. Shoulder down=1.
             robot.Shoulder.setPosition(0);
