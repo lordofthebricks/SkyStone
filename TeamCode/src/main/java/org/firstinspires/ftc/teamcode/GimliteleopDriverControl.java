@@ -130,15 +130,23 @@ public class GimliteleopDriverControl extends LinearOpMode {
                 telemetry.addData("Triforce", "Get the master");
 
             }
+            //Shoulder up is 0
+            //Wrist up is 1
+            //Shoulder down is 1
+            //Wrist down is 0
+            //left set for wrist
+            //right set for shoulder
+            //Trigger opens
+            //bumper closes
             if (gamepad1.right_bumper) {
-                robot.Wrist.setPosition(0);
+                robot.Shoulder.setPosition(1);
             } else if (gamepad1.left_bumper) {
-                robot.Wrist.setPosition(1);
+                robot.Wrist.setPosition(0);
             }
             if (gamepad1.left_trigger == 1) {
-                robot.Shoulder.setPosition(0);
+                robot.Wrist.setPosition(1);
             } else if (gamepad1.right_trigger == 1) {
-                robot.Shoulder.setPosition(1);
+                robot.Shoulder.setPosition(0);
             }
             if (gamepad1.y) {
                 robot.Slider.setPower(.4);
