@@ -434,13 +434,13 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 sleep(50);
                 //Strafe to the right and cross the bridge
                 //encoderDrive(0.75, 0.75, -0.75, 0.75, -0.75, 4.5);
-                double rightStrafeDist = 59;
-                double leftStrafeDist = 59;
+                double rightStrafeDist = 58;
+                double leftStrafeDist = 58;
 
                 if(strafeCount > 1 )
                     encoderDriveWithoutTime(.75, leftStrafeDist, -rightStrafeDist, rightStrafeDist, -leftStrafeDist);
                 else
-                    encoderDriveWithoutTime(.75, (leftStrafeDist + 8), -(rightStrafeDist + 8), (rightStrafeDist + 8), -(leftStrafeDist + 8)   );
+                    encoderDriveWithoutTime(.75, (leftStrafeDist + 9), -(rightStrafeDist + 9), (rightStrafeDist + 9), -(leftStrafeDist + 9)   );
                 sleep(25);
                 //The robot needs to lift the arm to put the SkyStone on the foundation
                 telemetry.addData("Setting the block down and lifting the shoulder", "");
