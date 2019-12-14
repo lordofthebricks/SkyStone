@@ -28,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name="R2 - Red Alliance - Auto", group="Gimli test")
+@Autonomous(name="R2 - Red Alliance - Auto", group="Gimli")
 public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
