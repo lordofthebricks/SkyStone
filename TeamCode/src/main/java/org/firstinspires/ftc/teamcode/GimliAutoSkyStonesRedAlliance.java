@@ -28,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name="R2 - Red Alliance - Auto", group="Gimli")
+@Autonomous(name="R2 - Red Alliance - Auto", group="Gimli test")
 public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
@@ -221,12 +221,11 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
         //
         // Create a transformation matrix describing where the phone is on the robot.
-        //
         // NOTE !!!!  It's very important that you turn OFF your phone's Auto-Screen-Rotation option.
         // Lock it into Portrait for these numbers to work.
         //
         // Info:  The coordinate frame for the robot looks the same as the field.
-        // The robot's "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.
+        // The robot's \\ "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.\\
         // Z is UP on the robot.  This equates to a bearing angle of Zero degrees.
         //
         // The phone starts out lying flat, with the screen facing Up and with the physical top of the phone
@@ -290,6 +289,13 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
         while (!isStopRequested()) {
             if(firstTime)
             {
+                encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
+                sleep(25);
+                double p = 16;
+                encoderDriveWithoutTime( 0.3, -p, p, -p, p );
+                sleep(25);
+
+
                 //go forward for 24 inches with variable
                 encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
                 sleep(25);

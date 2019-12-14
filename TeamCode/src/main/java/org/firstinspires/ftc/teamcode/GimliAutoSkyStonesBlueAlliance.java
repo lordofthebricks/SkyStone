@@ -287,9 +287,18 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
         int strafeCount = 0;
         double firstTimeDist = 24;
 
+
         while (!isStopRequested()) {
             if(firstTime)
             {
+                encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
+                sleep(25);
+                double p = 10.5;
+                encoderDriveWithoutTime( 0.3, p, -p, p, -p );
+                sleep(25);
+
+
+
                 //go forward for 24 inches with variable
                 encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
                 sleep(25);
@@ -426,7 +435,10 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                encoderDriveWithoutTime(0.5, 10, 10, 10, 10 );
+                if (strafeCount == 0)
+                    encoderDriveWithoutTime(0.5, 11, 11, 11, 11 );
+                else
+                    encoderDriveWithoutTime(0.5, 10.5, 10.5, 10.5, 10.5 );
                 sleep(25);
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
@@ -473,7 +485,7 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
                     encoderDriveWithoutTime(1, leftStrafeUnderBridgeDist, -rightStrafeUnderBridgeDist, rightStrafeUnderBridgeDist, -leftStrafeUnderBridgeDist);
                 }
                 else {
-                    encoderDriveWithoutTime(1, (leftStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(leftStrafeUnderBridgeDist + 1));
+                    encoderDriveWithoutTime(1, (leftStrafeUnderBridgeDist), -(rightStrafeUnderBridgeDist), (rightStrafeUnderBridgeDist), -(leftStrafeUnderBridgeDist));
                 }
 
                 stop();
