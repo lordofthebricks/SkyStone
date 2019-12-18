@@ -478,7 +478,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 }
                 double Speed = 0.5;
                 double InchesForeward = 30;
-
+                //needs work. change direction+distance
                 robot.Shoulder.setPosition(.1);
                 waitForStart();
                 encoderDrive(Speed,24,24,24,24,12);
