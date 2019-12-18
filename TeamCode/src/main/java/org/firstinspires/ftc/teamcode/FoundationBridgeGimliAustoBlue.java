@@ -36,7 +36,7 @@ public class FoundationBridgeGimliAustoBlue extends LinearOpMode {
             robot.Slider.setPower(0);
 
             //remove 0.5 from InchesForeword
-             //InchesForeward = InchesForeward-0.25;
+            InchesForeward = InchesForeward+InchesForeward;
             encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
             robot.Slider.setPower(0.3);
             sleep(1000);
