@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.Locale;
 
 
-@TeleOp(name = "GimliTeleopReal")
+@TeleOp(name = "GimliTeleopDriverControl")
 
 public class GimliteleopDriverControl extends LinearOpMode {
 
@@ -113,15 +113,16 @@ public class GimliteleopDriverControl extends LinearOpMode {
                 robot.Left_Top.setPower(-.6);
             }
             //This is the Strafe
+            // --Speeds changed by Coach 12/13/19
             while (gamepad1.left_stick_x == -1) {
                 robot.Right_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.Right_Top.setPower(-.9);
-                robot.Right_Bottom.setPower(.3);
-                robot.Left_Bottom.setPower(-.3);
-                robot.Left_Top.setPower(.9);
+                robot.Right_Top.setPower(-.6);
+                robot.Right_Bottom.setPower(.6);
+                robot.Left_Bottom.setPower(-.6);
+                robot.Left_Top.setPower(.6);
 
 
             }
@@ -130,23 +131,17 @@ public class GimliteleopDriverControl extends LinearOpMode {
                 telemetry.addData("Triforce", "Get the master");
 
             }
-            //Shoulder up is 0
-            //Wrist up is 1
-            //Shoulder down is 1
-            //Wrist down is 0
-            //left set for wrist
-            //right set for shoulder
-            //Trigger opens
-            //bumper closes
+            //Trigger/bumper actions changed by Coach 12/13/19
             if (gamepad1.right_bumper) {
-                robot.Shoulder.setPosition(1);
+                robot.Shoulder.setPosition(0);
             } else if (gamepad1.left_bumper) {
-                robot.Wrist.setPosition(0);
+                robot.Wrist.setPosition(1);
             }
             if (gamepad1.left_trigger == 1) {
-                robot.Wrist.setPosition(1);
+                robot.Wrist.setPosition(0);
+
             } else if (gamepad1.right_trigger == 1) {
-                robot.Shoulder.setPosition(0);
+                robot.Shoulder.setPosition(1);
             }
             if (gamepad1.y) {
                 robot.Slider.setPower(.4);

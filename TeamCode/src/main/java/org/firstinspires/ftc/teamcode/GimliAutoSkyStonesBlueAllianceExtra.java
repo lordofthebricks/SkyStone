@@ -28,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 //import org.firstinspires.ftc.teamcode.ServoTest;
 
 
-@Autonomous(name="BlueAllianceGimliAutonomousSkyStone", group="Gimli test")
+@Autonomous(name="Blue Alliance - Gimli Autonomous SkyStoneExtra", group="Gimli test")
 public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
@@ -352,7 +352,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
                 //encoderDriveWithoutTime(-0.3, 0, 0, -0.5, 0);
 
-                //strafe to the left so the arm comes directly on top of the skystone.
+                //strafe to the Right so the arm comes directly on top of the skystone.
                 double y = 11.5;//18 / mmPerInch;
                 telemetry.addData("StrafeCount=",strafeCount);
                 telemetry.update();
@@ -361,13 +361,14 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
                 if (strafeCount == 0) {
                     y=8;
-                    encoderDriveWithoutTime(1, -y, y, -y, y);
+                    encoderDriveWithoutTime(1, y, -y, y, -y);
 
                 }
-                /*if (strafeCount == 3){
-                    y=11.5;
+                if (strafeCount == 3){
+                    y=6;
+                    encoderDriveWithoutTime(1, y, -y, y, -y);
                 }
-                if (strafeCount > 3) {
+                /*if (strafeCount > 3) {
                     y=13.75;
                 }
                 if(strafeCount > 0 && strafeCount <3)
@@ -463,17 +464,42 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 sleep(500);
                 robot.Wrist.setPosition(0);
                 sleep(500);
-                double leftStrafeUnderBridgeDist = 19;
-                double rightStrafeUnderBridgeDist = 19;
+                //double leftStrafeUnderBridgeDist = 19;
+                //double rightStrafeUnderBridgeDist = 19;
 
                 //Strafe to the right and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
-                if (strafeCount > 1) {
-                    encoderDriveWithoutTime(1, leftStrafeUnderBridgeDist, -rightStrafeUnderBridgeDist, rightStrafeUnderBridgeDist, -leftStrafeUnderBridgeDist);
+                double inchesSidewayWays = 0;
+                if (strafeCount == 0){
+                    inchesSidewayWays = 20;
                 }
                 else {
-                    encoderDriveWithoutTime(1, (leftStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(leftStrafeUnderBridgeDist + 1));
+                    inchesSidewayWays = 52;
                 }
+                double Speed = 0.5;
+                double InchesForeward = 30;
+                //needs work. change direction+distance
+                robot.Shoulder.setPosition(.1);
+                waitForStart();
+                encoderDrive(Speed,24,24,24,24,12);
+                encoderDrive(Speed,-36,36,-36,36,12);
+                robot.Slider.setPower(0.4);
+                sleep(1000);
+                robot.Slider.setPower(0);
+                encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
+                //grabs foundation w/ slider
+                robot.Slider.setPower(-0.3);
+                sleep(1000);
+                robot.Slider.setPower(0);
+
+                //remove 0.5 from InchesForeword
+                InchesForeward = InchesForeward+InchesForeward;
+                encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
+                robot.Slider.setPower(0.3);
+                sleep(1000);
+                robot.Slider.setPower(0);
+                robot.Shoulder.setPosition(.5);
+                encoderDrive(Speed, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, 9);
 
                 stop();
 

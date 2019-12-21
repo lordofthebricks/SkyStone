@@ -221,12 +221,11 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
         //
         // Create a transformation matrix describing where the phone is on the robot.
-        //
         // NOTE !!!!  It's very important that you turn OFF your phone's Auto-Screen-Rotation option.
         // Lock it into Portrait for these numbers to work.
         //
         // Info:  The coordinate frame for the robot looks the same as the field.
-        // The robot's "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.
+        // The robot's \\ "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.\\
         // Z is UP on the robot.  This equates to a bearing angle of Zero degrees.
         //
         // The phone starts out lying flat, with the screen facing Up and with the physical top of the phone
@@ -272,27 +271,45 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
 
-        targetsSkyStone.activate();
+
         boolean firstTime = true;
 
         waitForStart();
-
-
-
-
         //Setting the wrist and the shoulder all the way up so it doesn't mess up the program
         robot.Shoulder.setPosition(0);
         robot.Wrist.setPosition(1);
+        sleep(25);
 
         int strafeCount = 0;
         double firstTimeDist = 24;
 
+        //go forward for 24 inches with variable
+        encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
+        sleep(25);
+
+        encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
+        sleep(25);
+        double p = 16;
+        encoderDriveWithoutTime( 0.3, -p, p, -p, p );
+        sleep(25);
+
+        targetsSkyStone.activate();
+        sleep(4000);
+
+
+
+
+
+
         while (!isStopRequested()) {
             if(firstTime)
             {
-                //go forward for 24 inches with variable
-                encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
-                sleep(25);
+
+
+
+
+
+
             }
             //Sometimes the shoulder is falling so we have to reset it. Wrist up=0. Wrist down=1. Shoulder up=0. Shoulder down=1.
             robot.Shoulder.setPosition(0);
@@ -432,7 +449,7 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 if(strafeCount > 1 )
                     encoderDriveWithoutTime(.75, leftStrafeDist, -rightStrafeDist, rightStrafeDist, -leftStrafeDist);
                 else
-                    encoderDriveWithoutTime(.75, (leftStrafeDist + 8), -(rightStrafeDist + 8), (rightStrafeDist + 8), -(leftStrafeDist + 8)   );
+                    encoderDriveWithoutTime(.75, (leftStrafeDist + 9), -(rightStrafeDist + 9), (rightStrafeDist + 9), -(leftStrafeDist + 9)   );
                 sleep(25);
                 //The robot needs to lift the arm to put the SkyStone on the foundation
                 telemetry.addData("Setting the block down and lifting the shoulder", "");
@@ -448,12 +465,16 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
                 double leftStrafeUnderBridgeDist = 23;
                 double rightStrafeUnderBridgeDist = 23;
 
+                sleep(30);
+                encoderDriveWithoutTime(0.5,-3,-3,-3,-3);
+                sleep(30);
                 //Strafe to the left and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
                 if (strafeCount > 1) {
                     encoderDriveWithoutTime(1, -leftStrafeUnderBridgeDist, rightStrafeUnderBridgeDist, -rightStrafeUnderBridgeDist, leftStrafeUnderBridgeDist);
                 }
                 else {
+
                     encoderDriveWithoutTime(1, -(leftStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), leftStrafeUnderBridgeDist + 1);
                 }
 
