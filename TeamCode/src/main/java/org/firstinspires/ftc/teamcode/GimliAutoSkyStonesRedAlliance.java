@@ -274,6 +274,7 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
 
         boolean firstTime = true;
 
+        targetsSkyStone.activate();
         waitForStart();
         //Setting the wrist and the shoulder all the way up so it doesn't mess up the program
         robot.Shoulder.setPosition(0);
@@ -283,31 +284,20 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
         int strafeCount = 0;
         double firstTimeDist = 24;
 
-        //go forward for 24 inches with variable
-        encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
-        sleep(25);
-
-        encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
-        sleep(25);
-        double p = 16;
-        encoderDriveWithoutTime( 0.3, -p, p, -p, p );
-        sleep(25);
-
-        targetsSkyStone.activate();
-        sleep(4000);
-
-
-
-
-
 
         while (!isStopRequested()) {
             if(firstTime)
             {
-
-
-
-
+                //Go forward slightly so the robot doesn't touch the wall
+                encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
+                sleep(25);
+                //Strafe to the left so that the right wheel comes right over the first and second tile intersection
+                double p = 16;
+                encoderDriveWithoutTime( 0.3, -p, p, -p, p );
+                sleep(25);
+                //go forward for 24 inches with variable
+                encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
+                sleep(25);
 
 
             }

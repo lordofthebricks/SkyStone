@@ -28,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 //import org.firstinspires.ftc.teamcode.ServoTest;
 
 
-@Autonomous(name="Blue Alliance - Gimli Autonomous SkyStone", group="Gimli test")
+@Autonomous(name="B2 - Blue Alliance - Auto", group="Gimli")
 public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
@@ -272,27 +272,46 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
 
-        targetsSkyStone.activate();
+
         boolean firstTime = true;
+
+        targetsSkyStone.activate();
 
         waitForStart();
 
 
-
+        int strafeCount = 0;
+        double firstTimeDist = 24;
 
         //Setting the wrist and the shoulder all the way up so it doesn't mess up the program
         robot.Shoulder.setPosition(0);
         robot.Wrist.setPosition(1);
+        sleep(25);
 
-        int strafeCount = 0;
-        double firstTimeDist = 24;
+
+
+
+
+
+
 
         while (!isStopRequested()) {
             if(firstTime)
             {
+
+                //go forward slightly so it doesn't touch the wall
+                encoderDriveWithoutTime(.3, -.25, -.25, -.25, -.25);
+                sleep(25);
+                //Strafe to the right so that the front Lookie comes right over the first and second tile intersection
+                double p = 10.5;
+                encoderDriveWithoutTime( 0.3, p, -p, p, -p );
+                sleep(25);
+
                 //go forward for 24 inches with variable
                 encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
                 sleep(25);
+
+
             }
             //Sometimes the shoulder is falling so we have to reset it. Wrist up=0. Wrist down=1. Shoulder up=0. Shoulder down=1.
             robot.Shoulder.setPosition(0);
@@ -426,7 +445,10 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                encoderDriveWithoutTime(0.5, 10, 10, 10, 10 );
+                if (strafeCount == 0)
+                    encoderDriveWithoutTime(0.5, 11, 11, 11, 11 );
+                else
+                    encoderDriveWithoutTime(0.5, 10.5, 10.5, 10.5, 10.5 );
                 sleep(25);
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
@@ -467,13 +489,17 @@ public class GimliAutoSkyStonesBlueAlliance extends LinearOpMode {
                 double leftStrafeUnderBridgeDist = 19;
                 double rightStrafeUnderBridgeDist = 19;
 
+                sleep(30);
+                encoderDriveWithoutTime(0.5,-3,-3,-3,-3);
+                sleep(30);
+
                 //Strafe to the right and park under the bridge
                 //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
                 if (strafeCount > 1) {
                     encoderDriveWithoutTime(1, leftStrafeUnderBridgeDist, -rightStrafeUnderBridgeDist, rightStrafeUnderBridgeDist, -leftStrafeUnderBridgeDist);
                 }
                 else {
-                    encoderDriveWithoutTime(1, (leftStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(leftStrafeUnderBridgeDist + 1));
+                    encoderDriveWithoutTime(1, (leftStrafeUnderBridgeDist), -(rightStrafeUnderBridgeDist), (rightStrafeUnderBridgeDist), -(leftStrafeUnderBridgeDist));
                 }
 
                 stop();
