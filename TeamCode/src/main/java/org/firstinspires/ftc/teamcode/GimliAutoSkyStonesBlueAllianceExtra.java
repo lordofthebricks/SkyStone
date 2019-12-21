@@ -92,6 +92,8 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+        double StrafeMove = 8;
+
         robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -280,7 +282,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
 
 
-        //Setting the wrist and the shoulder all the way up so it doesn't mess up the program
+        //Setting the wrist and the
         robot.Shoulder.setPosition(0);
         robot.Wrist.setPosition(1);
 
@@ -291,7 +293,8 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
             if(firstTime)
             {
                 //go forward for 24 inches with variable
-                encoderDriveWithoutTime(-1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
+               // encoderDriveWithoutTime(1,24,-24,24,-24);
+                encoderDriveWithoutTime(1,-firstTimeDist,-firstTimeDist,-firstTimeDist,-firstTimeDist);
                 sleep(25);
             }
             //Sometimes the shoulder is falling so we have to reset it. Wrist up=0. Wrist down=1. Shoulder up=0. Shoulder down=1.
@@ -303,7 +306,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 telemetry.update();
                 //sleep(2000);
                 //encoderDrive(-.75,-.75,-.75,-.75,-.75,0.75);
-                encoderDriveWithoutTime(-0.5,-.75,-0.75,-0.75,-0.75);
+                encoderDriveWithoutTime(0.5,-0.75,-0.75,-0.75,-0.75);
                 sleep(25);
             }
             telemetry.addData("Distance to Stone Less than 11 inches ", robot.Lookie.getDistance(DistanceUnit.INCH));
@@ -365,7 +368,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
                 }
                 if (strafeCount == 3){
-                    y=6;
+                    y=12;
                     encoderDriveWithoutTime(1, y, -y, y, -y);
                 }
                 /*if (strafeCount > 3) {
@@ -408,10 +411,14 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
 
                 if (strafeCount == 0 )
                     x=-5.25;
+                    //x=-8;
                 if (strafeCount > 0 )
                     x=-6.25;
-
+                    //x=-8;
                 //encoderDrive(-0.25, x, x, x, x, 0.55);
+                // moves over to better grab stone
+                encoderDriveWithoutTime(.5,12,-12,12,-12);
+
                 encoderDriveWithoutTime(-0.25, x, x, x, x);
                 sleep(50);
                 //Lower the shoulder and wrist to grab the skystone
@@ -426,7 +433,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 sleep(50);
                 //Drive the robot back
                 //encoderDrive(0.3, .75, .75, .75, .75, 1.23);
-                encoderDriveWithoutTime(0.5, 10, 10, 10, 10 );
+                encoderDriveWithoutTime(0.5, 15, 15, 15, 15 );
                 sleep(25);
                 telemetry.addData("Strafing to the right","");
                 telemetry.update();
@@ -482,7 +489,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 robot.Shoulder.setPosition(.1);
                 waitForStart();
                 encoderDrive(Speed,24,24,24,24,12);
-                encoderDrive(Speed,-36,36,-36,36,12);
+                encoderDrive(Speed,-30,30,-30,30,12);
                 robot.Slider.setPower(0.4);
                 sleep(1000);
                 robot.Slider.setPower(0);
@@ -499,7 +506,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 sleep(1000);
                 robot.Slider.setPower(0);
                 robot.Shoulder.setPosition(.5);
-                encoderDrive(Speed, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, 9);
+                encoderDrive(Speed, inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, 9);
 
                 stop();
 
@@ -509,7 +516,7 @@ public class GimliAutoSkyStonesBlueAllianceExtra extends LinearOpMode {
                 telemetry.update();
                 //Strafe to the left
                 //encoderDrive(.75,.75,-.75,.75,-.75,0.75);
-                encoderDriveWithoutTime(.75,-2,2,-2,2);
+                encoderDriveWithoutTime(.75,StrafeMove,-StrafeMove,StrafeMove,-StrafeMove);
                 sleep(250);
                 strafeCount++;
             }

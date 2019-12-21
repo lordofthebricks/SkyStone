@@ -128,7 +128,7 @@ public class GimliteleopDriverControl extends LinearOpMode {
             }
             //Fix Auto Stop!!!
             if (gamepad1.y) {
-                telemetry.addData("Triforce", "Get the master");
+                telemetry.addData("ZELDA:", "GET THE MASTER SWORD");
 
             }
             //Trigger/bumper actions changed by Coach 12/13/19
@@ -145,9 +145,10 @@ public class GimliteleopDriverControl extends LinearOpMode {
             }
             if (gamepad1.y) {
                 robot.Slider.setPower(.4);
+                robot.Slider.setPower(0);
             } else if (gamepad1.a) {
                 robot.Slider.setPower(-.4);
-
+                robot.Slider.setPower(0);
             }
 
             if (gamepad1.x) {
