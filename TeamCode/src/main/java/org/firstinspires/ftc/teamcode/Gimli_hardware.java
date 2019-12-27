@@ -1,20 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 //import statements
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistance;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
 public class Gimli_hardware {
@@ -26,7 +18,7 @@ public class Gimli_hardware {
     public Servo Wrist;
     public Servo Shoulder;
     public DcMotor Slider;
-    public DistanceSensor Lookie;
+    public DistanceSensor FrontLookie;
     public DistanceSensor BackLookie;
     public DistanceSensor LeftLookie;
     public DistanceSensor RightLookie;
@@ -51,7 +43,7 @@ public class Gimli_hardware {
         Wrist =hwMap.get(Servo.class,"Wrist");
         Shoulder = hwMap.get(Servo.class,"Shoulder");
         Slider = hwMap.get(DcMotor.class,"Slider");
-        Lookie = hwMap.get(DistanceSensor.class, "Lookie");
+        FrontLookie = hwMap.get(DistanceSensor.class, "FrontLookie");
         RightLookie = hwMap.get(DistanceSensor.class, "Right");
         LeftLookie = hwMap.get(DistanceSensor.class, "Left");
         BackLookie = hwMap.get(DistanceSensor.class, "Back");

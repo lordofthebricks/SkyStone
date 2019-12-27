@@ -7,7 +7,7 @@
         <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="3.5.2" />
         <option name="LAST_KNOWN_AGP_VERSION" value="3.5.2" />
       </configuration>
-    </facet> <!-- -->
+    </facet>
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -95,9 +95,6 @@
     <orderEntry type="library" name="Gradle: :WirelessP2p-release:@aar" level="project" />
     <orderEntry type="library" name="Gradle: :tfod-release:@aar" level="project" />
     <orderEntry type="library" name="Gradle: :tensorflow-lite-0.0.0-nightly:@aar" level="project" />
-    <orderEntry type="module" module-name="FtcRobotController" />
-    <orderEntry type="library" name="Gradle: android-android-28" level="project" />
-    <orderEntry type="module" module-name="FtcRobotController" />
     <orderEntry type="module" module-name="FtcRobotController" />
   </component>
 </module>

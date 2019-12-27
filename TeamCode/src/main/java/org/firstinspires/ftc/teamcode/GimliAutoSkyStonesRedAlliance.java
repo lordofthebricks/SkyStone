@@ -305,15 +305,15 @@ public class GimliAutoSkyStonesRedAlliance extends LinearOpMode {
             robot.Shoulder.setPosition(0);
             telemetry.addData("The shoulder is up", "");
             telemetry.update();
-            while (robot.Lookie.getDistance(DistanceUnit.INCH) > 11 && firstTime) {
-                telemetry.addData("Distance to Stone ", robot.Lookie.getDistance(DistanceUnit.INCH));
+            while (robot.FrontLookie.getDistance(DistanceUnit.INCH) > 11 && firstTime) {
+                telemetry.addData("Distance to Stone ", robot.FrontLookie.getDistance(DistanceUnit.INCH));
                 telemetry.update();
                 //sleep(2000);
                 //encoderDrive(-.75,-.75,-.75,-.75,-.75,0.75);
                 encoderDriveWithoutTime(-0.5,-.75,-0.75,-0.75,-0.75);
                 sleep(25);
             }
-            telemetry.addData("Distance to Stone Less than 11 inches ", robot.Lookie.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance to Stone Less than 11 inches ", robot.FrontLookie.getDistance(DistanceUnit.INCH));
             telemetry.addData("FirstTime Flag ", firstTime);
             telemetry.update();
             //sleep(250);
