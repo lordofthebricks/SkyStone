@@ -44,9 +44,9 @@ public class Gimli_hardware {
         Shoulder = hwMap.get(Servo.class,"Shoulder");
         Slider = hwMap.get(DcMotor.class,"Slider");
         FrontLookie = hwMap.get(DistanceSensor.class, "FrontLookie");
-        RightLookie = hwMap.get(DistanceSensor.class, "Right");
-        LeftLookie = hwMap.get(DistanceSensor.class, "Left");
-        BackLookie = hwMap.get(DistanceSensor.class, "Back");
+        RightLookie = hwMap.get(DistanceSensor.class, "RightLookie");
+        LeftLookie = hwMap.get(DistanceSensor.class, "LeftLookie");
+        BackLookie = hwMap.get(DistanceSensor.class, "BackLookie");
 
 
 
