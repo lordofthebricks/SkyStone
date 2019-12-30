@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -28,9 +28,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 //import org.firstinspires.ftc.teamcode.ServoTest;
 
-@Disabled
-@Autonomous(name="Red_Alliance_SkyStone_Foundation", group="Gimli test")
-public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
+
+@Autonomous(name="R2 - Red Alliance - Auto", group="Gimli test")
+public class GimliAutoSkyStonesRedAllianceextrafouundationpull extends LinearOpMode {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
@@ -91,7 +91,10 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
 
     @Override public void runOpMode() {
 
+
         robot.init(hardwareMap);
+
+
 
         robot.Left_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -222,12 +225,11 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
 
         //
         // Create a transformation matrix describing where the phone is on the robot.
-        //
         // NOTE !!!!  It's very important that you turn OFF your phone's Auto-Screen-Rotation option.
         // Lock it into Portrait for these numbers to work.
         //
         // Info:  The coordinate frame for the robot looks the same as the field.
-        // The robot's "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.
+        // The robot's \\ "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.\\
         // Z is UP on the robot.  This equates to a bearing angle of Zero degrees.
         //
         // The phone starts out lying flat, with the screen facing Up and with the physical top of the phone
@@ -277,13 +279,7 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
         boolean firstTime = true;
 
         targetsSkyStone.activate();
-       // boolean firstTime = true;
-
         waitForStart();
-
-
-
-
         //Setting the wrist and the shoulder all the way up so it doesn't mess up the program
         robot.Shoulder.setPosition(0);
         robot.Wrist.setPosition(1);
@@ -291,6 +287,7 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
 
         int strafeCount = 0;
         double firstTimeDist = 24;
+
 
         while (!isStopRequested()) {
             if(firstTime)
@@ -446,7 +443,7 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
                 if(strafeCount > 1 )
                     encoderDriveWithoutTime(.75, leftStrafeDist, -rightStrafeDist, rightStrafeDist, -leftStrafeDist);
                 else
-                    encoderDriveWithoutTime(.75, (leftStrafeDist + 8), -(rightStrafeDist + 8), (rightStrafeDist + 8), -(leftStrafeDist + 8)   );
+                    encoderDriveWithoutTime(.75, (leftStrafeDist + 9), -(rightStrafeDist + 9), (rightStrafeDist + 9), -(leftStrafeDist + 9)   );
                 sleep(25);
                 //The robot needs to lift the arm to put the SkyStone on the foundation
                 telemetry.addData("Setting the block down and lifting the shoulder", "");
@@ -462,45 +459,38 @@ public class GimliAutoSkyStonesRedAllianceExtra extends LinearOpMode {
                 double leftStrafeUnderBridgeDist = 23;
                 double rightStrafeUnderBridgeDist = 23;
 
-                //Strafe to the left and park under the bridge
-                //encoderDrive(0.75, -0.75, 0.75, -0.75, 0.75, 2.25);
-               /* if (strafeCount > 1) {
-                    encoderDriveWithoutTime(1, -leftStrafeUnderBridgeDist, rightStrafeUnderBridgeDist, -rightStrafeUnderBridgeDist, leftStrafeUnderBridgeDist);
-                }
-                else {
-                    encoderDriveWithoutTime(1, -(leftStrafeUnderBridgeDist + 1), (rightStrafeUnderBridgeDist + 1), -(rightStrafeUnderBridgeDist + 1), leftStrafeUnderBridgeDist + 1);
-                }
-*/              double inchesSidewayWays = 0;
-                if (strafeCount == 0){
-                     inchesSidewayWays = 20;
-                }
-                else {
-                    inchesSidewayWays = 52;
-                }
-                double Speed = 0.3;
-                double InchesForeward = 12;
+                sleep(30);
+                encoderDriveWithoutTime(0.5,-3,-3,-3,-3);
+                sleep(30);
 
-                robot.Shoulder.setPosition(.1);
-                waitForStart();
+                double Speed = 0.5;
+                double InchesForeward = 30;
+                double InchesSideWays = 52;
+                double InchesToRightWall = robot.LeftLookie.getDistance(DistanceUnit.INCH)-12;
+                double InchesToWall = -robot.BackLookie.getDistance(DistanceUnit.INCH);
+
+                encoderDriveWithoutTime(.4,InchesToWall,InchesToWall,InchesToWall,InchesToWall);
+                encoderDriveWithoutTime(0.4,-InchesToRightWall,InchesToRightWall,-InchesToRightWall,InchesToRightWall);
+
+                encoderDrive(Speed,-12,-12,-12,-12,12);
+                encoderDrive(Speed,12,-12,12,- 12,12);
                 robot.Slider.setPower(0.4);
                 sleep(1000);
                 robot.Slider.setPower(0);
-                encoderDrive(Speed,inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, 9);
                 encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
                 //grabs foundation w/ slider
-                sleep(1000);
                 robot.Slider.setPower(-0.3);
+                sleep(1000);
                 robot.Slider.setPower(0);
 
                 //remove 0.5 from InchesForeword
-                //InchesForeward = InchesForeward-0.25;
+                InchesForeward = InchesForeward+InchesForeward;
                 encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
                 robot.Slider.setPower(0.3);
                 sleep(1000);
                 robot.Slider.setPower(0);
                 robot.Shoulder.setPosition(.5);
-                encoderDrive(Speed, -inchesSidewayWays, inchesSidewayWays, -inchesSidewayWays, inchesSidewayWays, 9);
-
+                encoderDrive(Speed, -InchesSideWays, InchesSideWays, -InchesSideWays, InchesSideWays, 9);
 
 
                 stop();
