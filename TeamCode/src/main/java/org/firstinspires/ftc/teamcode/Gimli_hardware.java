@@ -23,6 +23,7 @@ public class Gimli_hardware {
     public DistanceSensor BackLookie;
     public DistanceSensor LeftLookie;
     public DistanceSensor RightLookie;
+    public Servo Dumpee;
     //vuforia
     public VuforiaLocalizer vuforia;
 
@@ -48,7 +49,7 @@ public class Gimli_hardware {
         RightLookie = hwMap.get(DistanceSensor.class, "RightLookie");
         LeftLookie = hwMap.get(DistanceSensor.class, "LeftLookie");
         BackLookie = hwMap.get(DistanceSensor.class, "BackLookie");
-
+        Dumpee = hwMap.get(Servo.class, "Dumper");
 
         Slider.setDirection(DcMotor.Direction.REVERSE);
         Left_Top.setDirection(DcMotor.Direction.REVERSE);
