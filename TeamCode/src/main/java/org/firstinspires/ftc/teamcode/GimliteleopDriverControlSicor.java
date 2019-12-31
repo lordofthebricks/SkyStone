@@ -157,6 +157,16 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
 
             } else if (gamepad1.a) {
 
+                if (Timesused > 1) {
+                    Timesused -= 7;
+                    encoderSlider(.3, 7, 10);
+                }
+                else
+                {
+                    Timesused -= 1;
+                    encoderSlider(.3, 1, 2);
+                }
+
             }
 
             if (gamepad1.x) {

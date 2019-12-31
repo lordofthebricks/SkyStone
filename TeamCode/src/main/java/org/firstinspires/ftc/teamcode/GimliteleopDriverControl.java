@@ -143,12 +143,14 @@ public class GimliteleopDriverControl extends LinearOpMode {
 
 
             }
-            //Fix Auto Stop!!!
-            if (gamepad1.y) {
-                telemetry.addData("ZELDA:", "GET THE MASTER SWORD");
 
-            }
+
+            //Fix Auto Stop!!!
+
             //Trigger/bumper actions changed by Coach 12/13/19
+
+
+
             if (gamepad1.right_bumper) {
                 robot.Shoulder.setPosition(0);
             } else if (gamepad1.left_bumper) {
