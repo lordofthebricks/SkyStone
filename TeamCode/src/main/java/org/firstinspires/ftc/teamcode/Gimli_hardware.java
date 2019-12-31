@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 //import statements
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -49,7 +50,7 @@ public class Gimli_hardware {
         BackLookie = hwMap.get(DistanceSensor.class, "BackLookie");
 
 
-
+        Slider.setDirection(DcMotor.Direction.REVERSE);
         Left_Top.setDirection(DcMotor.Direction.REVERSE);
         Left_Bottom.setDirection(DcMotor.Direction.REVERSE);
 

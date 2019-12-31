@@ -466,9 +466,8 @@ public class GimliAutoSkyStonesRedAllianceextrafouundationpull extends LinearOpM
                 double Speed = 0.5;
                 double InchesForeward = 30;
                 double InchesSideWays = 52;
-                double InchesToRightWall = robot.LeftLookie.getDistance(DistanceUnit.INCH)-12;
+                double InchesToRightWall = robot.RightLookie.getDistance(DistanceUnit.INCH)-12;
                 double InchesToWall = -robot.BackLookie.getDistance(DistanceUnit.INCH);
-
                 encoderDriveWithoutTime(.4,InchesToWall,InchesToWall,InchesToWall,InchesToWall);
                 encoderDriveWithoutTime(0.4,-InchesToRightWall,InchesToRightWall,-InchesToRightWall,InchesToRightWall);
 

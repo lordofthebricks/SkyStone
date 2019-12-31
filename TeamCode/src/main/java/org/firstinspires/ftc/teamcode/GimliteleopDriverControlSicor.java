@@ -26,6 +26,7 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+        int Timesused = 0;
         int FirstTime = 0;
         waitForStart();
         // Send telemetry message to signify robot waiting;
@@ -130,10 +131,7 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
 
             }
             //Fix Auto Stop!!!
-            if (gamepad1.y) {
-                telemetry.addData("ZELDA:", "GET THE MASTER SWORD");
 
-            }
             //Trigger/bumper actions changed by Coach 12/13/19
             if (gamepad1.right_bumper) {
                 robot.Shoulder.setPosition(0);
@@ -150,18 +148,26 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
                 if (FirstTime == 0){
                     encoderSlider(0.3,1,4);
                     FirstTime ++;
+                    Timesused ++;
                 }
                else {
                    encoderSlider(0.3,7,10);
+                   Timesused += 7;
                 }
 
             } else if (gamepad1.a) {
-                robot.Slider.setPower(-.4);
-                robot.Slider.setPower(0);
+
             }
 
             if (gamepad1.x) {
-                robot.Slider.setPower(0);
+                encoderSlider(.3,Timesused,12);
+                Timesused =0;
+            }
+
+            if (gamepad1.b) {
+                encoderSlider(.3,Timesused,12);
+                FirstTime = 0;
+                Timesused= 0;
             }
         }
     }
