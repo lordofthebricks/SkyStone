@@ -1,24 +1,39 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "GimliTeleopDriverControl")
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-public class GimliteleopDriverControlSicor extends LinearOpMode {
-    static final double     COUNTS_PER_MOTOR_REV    = 1425.2;//356.3 ;    // eg: DC Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 3.75 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            //first hundred digits of pi fr more accuracy
-            (WHEEL_DIAMETER_INCHES * 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
-    Gimli_hardware robot   = new Gimli_hardware();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
+import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
+import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
+import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
+import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
+
+
+@TeleOp(name = "GimliTeleopDriverControlNotWorking")
+
+public class GimliteleopDriverControlNotWorking extends LinearOpMode {
+
     double posWrist = 0.02;
     //Add double posShoulder Variable for the shoulder movement
 
-
+    Gimli_hardware robot = new Gimli_hardware();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,8 +41,6 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        int Timesused = 0;
-        int FirstTime = 0;
         waitForStart();
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -130,9 +143,14 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
 
 
             }
+
+
             //Fix Auto Stop!!!
 
             //Trigger/bumper actions changed by Coach 12/13/19
+
+
+
             if (gamepad1.right_bumper) {
                 robot.Shoulder.setPosition(0);
             } else if (gamepad1.left_bumper) {
@@ -145,105 +163,16 @@ public class GimliteleopDriverControlSicor extends LinearOpMode {
                 robot.Shoulder.setPosition(1);
             }
             if (gamepad1.y) {
-                if (FirstTime == 0){
-                    encoderSlider(0.3,1,4);
-                    FirstTime ++;
-                    Timesused ++;
-                }
-               else {
-                   encoderSlider(0.3,7,10);
-                   Timesused += 7;
-                }
-
+                robot.Slider.setPower(.4);
+                robot.Slider.setPower(0);
             } else if (gamepad1.a) {
-
-                if (Timesused > 1) {
-                    Timesused -= 7;
-                    encoderSlider(.3, 7, 10);
-                }
-                else
-                {
-                    Timesused -= 1;
-                    encoderSlider(.3, 1, 2);
-                }
-
+                robot.Slider.setPower(-.4);
+                robot.Slider.setPower(0);
             }
 
             if (gamepad1.x) {
-                encoderSlider(.3,Timesused,12);
-                Timesused =0;
-            }
-
-            if (gamepad1.b) {
-                encoderSlider(.3,Timesused,12);
-                FirstTime = 0;
-                Timesused= 0;
+                robot.Slider.setPower(0);
             }
         }
     }
-    public void encoderSlider ( double speed,
-                               double SliderInches,
-
-                               double timeoutS){
-        int newLeftBottomTarget;
-        int newRightBottomTarget;
-        int newRightTopTarget;
-        int newLeftTopTarget;
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-
-            // Determine new target position, and pass to motor controller
-            newLeftBottomTarget = robot.Slider.getCurrentPosition() + (int) (SliderInches * COUNTS_PER_INCH);
-            //newRightBottomTarget = robot.Right_Bottom.getCurrentPosition() + (int) (Right_Bottom_Inches * COUNTS_PER_INCH);
-            //newRightTopTarget = robot.Right_Top.getCurrentPosition() + (int) (Right_Top_Inches * COUNTS_PER_INCH);
-            //newLeftTopTarget = robot.Left_Top.getCurrentPosition() + (int) (Left_Top_Inches * COUNTS_PER_INCH);
-
-            robot.Slider.setTargetPosition(newLeftBottomTarget);
-            //robot.Right_Bottom.setTargetPosition(newRightBottomTarget);
-            //robot.Right_Top.setTargetPosition(newRightTopTarget);
-            //robot.Left_Top.setTargetPosition(newLeftTopTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.Slider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //robot.Left_Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //robot.Right_Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            robot.Slider.setPower(Math.abs(speed));
-            //robot.Right_Bottom.setPower(Math.abs(speed));
-            //robot.Left_Top.setPower(Math.abs(speed));
-            //robot.Right_Top.setPower(Math.abs(speed));
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.Left_Bottom.isBusy() ))//&& robot.Right_Bottom.isBusy() && robot.Left_Top.isBusy() && robot.Right_Top.isBusy())) {
-
-                // Display it for the driver.
-                //telemetry.addData("Path1", "Running to %7d :%7d", newLeftBottomTarget, newRightBottomTarget, newLeftTopTarget, newRightTopTarget);
-                //telemetry.addData("Path2", "Running at %7d :%7d", robot.Left_Bottom.getCurrentPosition(), robot.Right_Bottom.getCurrentPosition());
-                robot.Slider.getCurrentPosition();
-                //robot.Right_Top.getCurrentPosition();
-                //telemetry.update();
-            }
-
-            // Stop all motion;
-            robot.Slider.setPower(0);
-            //robot.Right_Bottom.setPower(0);
-            //robot.Left_Top.setPower(0);
-            //robot.Right_Top.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            robot.Slider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //robot.Right_Bottom.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //robot.Left_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //robot.Right_Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //  sleep(250);   // optional pause after each move
-
-        }
-    }
+}
