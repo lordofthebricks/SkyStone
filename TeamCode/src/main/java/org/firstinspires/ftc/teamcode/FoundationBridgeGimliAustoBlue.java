@@ -26,7 +26,8 @@ public class FoundationBridgeGimliAustoBlue extends LinearOpMode {
         waitForStart();
             encoderDrive(Speed,12,12,12,12,12);
             encoderDrive(Speed,12,-12,12,-12,12);
-            robot.Slider.setPower(0.4);
+            //robot.Slider.setPower(0.4);
+            robot.Grabee.setPosition(1);
             sleep(1000);
             robot.Slider.setPower(0);
             encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
