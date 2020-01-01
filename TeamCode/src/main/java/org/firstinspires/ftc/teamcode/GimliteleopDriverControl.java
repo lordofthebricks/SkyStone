@@ -26,9 +26,11 @@ public class GimliteleopDriverControl extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+        //int Timesused = 0;
+        //int FirstTime = 0;
+        waitForStart();
         int Timesused = 0;
         int FirstTime = 0;
-        waitForStart();
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
 
