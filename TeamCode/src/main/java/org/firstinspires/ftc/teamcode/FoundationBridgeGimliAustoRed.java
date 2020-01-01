@@ -20,20 +20,22 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
         robot.init(hardwareMap);
         //Declare varibles
         double Speed = 0.5;
-        double InchesForeward = 30;
-        double InchesSideWays = 52;
+        double InchesForeward = -30;
+        double InchesSideWays = -52;
         robot.Shoulder.setPosition(.1);
         waitForStart();
-            encoderDrive(Speed,-12,-12,-12,-12,12);
-            encoderDrive(Speed,12,-12,12,- 12,12);
-            robot.Slider.setPower(0.4);
-            sleep(1000);
-            robot.Slider.setPower(0);
+            encoderDrive(Speed,12,12,12,12,12);
+            encoderDrive(Speed,-12,12,-12, 12,12);
+            //robot.Slider.setPower(0.4);
+        robot.Grabee.setPosition(1);
+            sleep(100);
+            //robot.Slider.setPower(0);
             encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
             //grabs foundation w/ slider
-            robot.Slider.setPower(-0.3);
-            sleep(1000);
-            robot.Slider.setPower(0);
+            robot.Grabee.setPosition(0);
+        ///robot.Slider.setPower(-0.3);
+            sleep(100);
+            //robot.Slider.setPower(0);
 
             //remove 0.5 from InchesForeword
             InchesForeward = InchesForeward+InchesForeward;
