@@ -15,7 +15,7 @@ public class GimliteleopDriverControl extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
     Gimli_hardware robot   = new Gimli_hardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
-    double posWrist = 0.02;
+    //double posWrist = 0.02;
     //Add double posShoulder Variable for the shoulder movement
 
 
@@ -25,14 +25,17 @@ public class GimliteleopDriverControl extends LinearOpMode {
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
+        long startTime = System.currentTimeMillis();
         robot.init(hardwareMap);
+        long endTime = System.currentTimeMillis();
+        telemetry.addData("Total time taken for init", endTime - startTime);
+        telemetry.update();
         //int Timesused = 0;
         //int FirstTime = 0;
         waitForStart();
         int Timesused = 0;
         int FirstTime = 0;
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //
+
 
 
         /*
@@ -186,6 +189,16 @@ public class GimliteleopDriverControl extends LinearOpMode {
             }
             if (gamepad1.dpad_up) {
                 robot.Dumpee.setPosition(.2);
+            }
+            if (gamepad1.dpad_left) {
+                telemetry.addData("Grabee should be working", "");
+                telemetry.update();
+                robot.Grabee.setPosition(0);
+            }
+            if (gamepad1.dpad_right) {
+                telemetry.addData("Grabee should be working", "");
+                telemetry.update();
+                robot.Grabee.setPosition(0.3);
             }
 
         }
