@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @Autonomous(name="FoundationBridgeRed", group="Gimli")
 public class FoundationBridgeGimliAustoRed extends LinearOpMode {
 
@@ -20,8 +22,8 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
         robot.init(hardwareMap);
         //Declare varibles
         double Speed = 0.5;
-        double InchesForeward = -30;
-        //robot.Shoulder.setPosition(.1);
+        double InchesForeward = robot.BackLookie.getDistance(DistanceUnit.INCH);
+        double InchesBack = 0;
         double InchesSideWays = -52;
         waitForStart();
             encoderDrive(Speed,12,12,12,12,12);
@@ -30,7 +32,7 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
         robot.Grabee.setPosition(0.0);
             sleep(100);
             //robot.Slider.setPower(0);
-            encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);
+            encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
             //grabs foundation w/ slider
             robot.Grabee.setPosition(0.7);
         ///robot.Slider.setPower(-0.3);
@@ -38,8 +40,9 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
             //robot.Slider.setPower(0);
 
             //remove 0.5 from InchesForeword
-            InchesForeward = InchesForeward+InchesForeward;
-            encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
+            //InchesForeward = InchesForeward+InchesForeward;
+        InchesBack = robot.FrontLookie.getDistance(DistanceUnit.INCH);
+            encoderDrive(Speed, InchesBack, InchesBack, InchesBack, InchesBack, 6);
             ///robot.Slider.setPower(0.3);
             sleep(1000);
             //robot.Slider.setPower(0);
