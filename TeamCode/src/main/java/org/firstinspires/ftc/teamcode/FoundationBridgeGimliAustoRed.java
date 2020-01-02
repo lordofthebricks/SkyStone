@@ -21,13 +21,13 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
         //Declare varibles
         double Speed = 0.5;
         double InchesForeward = -30;
-        double InchesSideWays = -52;
         //robot.Shoulder.setPosition(.1);
+        double InchesSideWays = -52;
         waitForStart();
             encoderDrive(Speed,12,12,12,12,12);
             encoderDrive(Speed,-12,12,-12, 12,12);
             //robot.Slider.setPower(0.4);
-        robot.Grabee.setPosition(0.5);
+        robot.Grabee.setPosition(0.0);
             sleep(100);
             //robot.Slider.setPower(0);
             encoderDrive(Speed, -InchesForeward, -InchesForeward, -InchesForeward, -InchesForeward, 6);

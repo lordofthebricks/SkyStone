@@ -136,85 +136,56 @@ public class GimliteleopDriverControl extends LinearOpMode {
 
             //Trigger/bumper actions changed by Coach 12/13/19
             if (gamepad1.right_bumper) {
-                telemetry.addData("Right_Bumper should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 robot.Shoulder.setPosition(0);
             } else if (gamepad1.left_bumper) {
-                telemetry.addData("Left_Bumper should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 robot.Wrist.setPosition(1);
             }
             if (gamepad1.left_trigger == 1) {
-                telemetry.addData("Left_Trigger should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 robot.Wrist.setPosition(0);
 
             } else if (gamepad1.right_trigger == 1) {
-                telemetry.addData("Right_Trigger should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 robot.Shoulder.setPosition(1);
             }
             if (gamepad1.y) {
-                telemetry.addData("Y should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 if (FirstTime == 0){
-                    encoderSlider(.3,1,4);
+                    encoderSlider(0.3,1,4);
                     FirstTime ++;
                     Timesused ++;
                 }
                else {
-                   encoderSlider(.3,4,10);
+                   encoderSlider(0.3,7,10);
                    Timesused += 7;
                 }
 
             } else if (gamepad1.a) {
-                telemetry.addData("A should be working", "");
-                telemetry.update();
-                //sleep(1000);
 
                 if (Timesused > 1) {
                     Timesused -= 7;
-                    encoderSlider(.3, -4, 10);
+                    encoderSlider(.3, 7, 10);
                 }
                 else
                 {
                     Timesused -= 1;
-                    encoderSlider(.3 , -1, 2);
+                    encoderSlider(.3, 1, 2);
                 }
 
             }
 
             if (gamepad1.x) {
-                telemetry.addData("X should be working", "");
-                telemetry.update();
-                //sleep(1000);
-                encoderSlider(1,-Timesused,12);
-                Timesused = 0;
+                encoderSlider(.3,Timesused,12);
+                Timesused =0;
             }
 
             if (gamepad1.b) {
-                telemetry.addData("B should be working", "");
-                telemetry.update();
-                //sleep(1000);
+                encoderSlider(.3,Timesused,12);
                 FirstTime = 0;
-                Timesused = 0;
+                Timesused= 0;
             }
             if (gamepad1.dpad_down) {
-                telemetry.addData("Dumpee should be working", "");
-                telemetry.update();
-                //sleep(1000);
                 robot.Dumpee.setPosition(1);
             }
             if (gamepad1.dpad_up) {
-                telemetry.addData("Dumpee should be working", "");
-                telemetry.update();
-                //sleep(1000);
-                robot.Dumpee.setPosition(.3);
+                robot.Dumpee.setPosition(.2);
             }
 
         }
@@ -259,7 +230,7 @@ public class GimliteleopDriverControl extends LinearOpMode {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.Slider.isBusy() ))//&& robot.Right_Bottom.isBusy() && robot.Left_Top.isBusy() && robot.Right_Top.isBusy())) {
+                    (robot.Left_Bottom.isBusy() ))//&& robot.Right_Bottom.isBusy() && robot.Left_Top.isBusy() && robot.Right_Top.isBusy())) {
 
                 // Display it for the driver.
                 //telemetry.addData("Path1", "Running to %7d :%7d", newLeftBottomTarget, newRightBottomTarget, newLeftTopTarget, newRightTopTarget);
