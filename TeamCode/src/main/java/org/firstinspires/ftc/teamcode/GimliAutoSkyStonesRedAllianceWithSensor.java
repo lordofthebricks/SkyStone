@@ -714,7 +714,7 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         double deltaBackDist = backDist - finalBackDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
         sleep(SLEEP_25);
-        double finalLeftDist = 90;
+        double finalLeftDist = 86;
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
         sleep(SLEEP_25);
@@ -726,11 +726,11 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
         double leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
 
-        double finalBackDist = 20;
+        double finalBackDist = 17;
         double deltaBackDist = backDist - finalBackDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
         sleep(SLEEP_25);
-        double finalLeftDist = 86;
+        double finalLeftDist = 85;
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
         sleep(SLEEP_25);
@@ -777,9 +777,9 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
 
 
         double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
-        double leftDist = 86;
+        double leftDist = 83;
 
-        double finalBackDist = 24;
+        double finalBackDist = 27;
         double deltaBackDist = backDist - finalBackDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
         sleep(SLEEP_10);
@@ -823,35 +823,38 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         robot.Wrist.setPosition(0);
         sleep(100);
         */
+        //Red Alliance: 5th stone is 34 in.
+        //Red Alliance: 6th stone is 42 in.
         //Second SkyStone is in 1st position
         if(strafeCount > 2 && strafeCount <= 4)
         {
             //Basically the second skystone is in the first position
-            finalLeftDist = 0.25;
+            finalLeftDist = 0.1;
             //stop();
         }
         //Second SkyStone is in 5th
         else if(strafeCount == 0)
         {
-            finalLeftDist = 33;
+            finalLeftDist = 34;
         }
         //Second SkyStone is in 6th position
         else
         {
-            finalLeftDist = 41;
+            finalLeftDist = 42;
         }
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
         robot.Wrist.setPosition(1);
         sleep(200);
-        //Drive forward 4 inches
-        encoderDriveWithoutTime(-FORWARD_SPEED_1, -14, -14, -14, -14);
+        //Drive forward 13.5 inches
+        double a= 13;
+        encoderDriveWithoutTime(-FORWARD_SPEED_1, -a, -a, -a, -a);
         sleep(SLEEP_25);
         //moveTowardsStone(strafeCount,true);
 
         pickStone(strafeCount);
 
-        transferStone();
+        transferSecondStone();
 
         dropStone(strafeCount);
 

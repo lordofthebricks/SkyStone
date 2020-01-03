@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //public class TestGrabber {
-
+    @Disabled
     @TeleOp(name = "Red_Alliance_SkyStone_Foundation", group="Gimli test")
     public class TestGrabber extends LinearOpMode {
 
