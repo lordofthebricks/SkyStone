@@ -284,11 +284,11 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         //robot.Shoulder.setPosition(0);
         robot.Shoulder.setPosition(1);
         sleep(SLEEP_25);
-        robot.Wrist.setPosition(0);
-        sleep(SLEEP_25);
+        robot.Wrist.setPosition(1);
+
 
         int strafeCount = 0;
-        double firstTimeDist = 24;
+        double firstTimeDist = 20;
 
 
         while (!isStopRequested()) {
@@ -358,9 +358,9 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
 
                 dropStone(strafeCount);
 
-                //If we are picking only one stone then parkUnderBridge or else pickSecondStone
+                //If we are picking only one stone then parkUnderBridge or continue to pick SecondStone
                 parkUnderBridge();
-                //pickSecondStone(strafeCount);
+                pickSecondStone(strafeCount);
 
                 stop();
 
@@ -370,7 +370,7 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
                 telemetry.update();
                 //Strafe to the right
                 //encoderDrive(.75,.75,-.75,.75,-.75,0.75);
-                encoderDriveWithoutTime(FORWARD_SPEED_2,2,-2,2,-2   );
+                encoderDriveWithoutTime(FORWARD_SPEED_2,4,-4,4,-4   );
                 sleep(SLEEP_50);
                 strafeCount++;
             }
@@ -385,9 +385,12 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
     private boolean moveTowardsStone(int strafeCount, boolean firstTime) {
 
         //Sometimes the shoulder is falling so we have to reset it. Wrist up=0. Wrist down=1. Shoulder up=0. Shoulder down=1.
-        robot.Shoulder.setPosition(0);
-        telemetry.addData("The shoulder is up", "");
-        telemetry.update();
+        //robot.Shoulder.setPosition(0);
+        //telemetry.addData("The shoulder is up", "");
+        //telemetry.update();
+        //double finalDist = 13;
+        //double currentDist = robot.FrontLookie.getDistance(DistanceUnit.INCH);
+        //double deltaDist = finalDist - currentDist;
         while (robot.FrontLookie.getDistance(DistanceUnit.INCH) > 11 && firstTime) {
             telemetry.addData("Distance to Stone ", robot.FrontLookie.getDistance(DistanceUnit.INCH));
             telemetry.update();
@@ -396,6 +399,8 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
             encoderDriveWithoutTime(-FORWARD_SPEED_1,-.75,-0.75,-0.75,-0.75);
             sleep(SLEEP_25);
         }
+        //encoderDriveWithoutTime(-FORWARD_SPEED_2,deltaDist,deltaDist,deltaDist,deltaDist);
+        //sleep(SLEEP_25);
         telemetry.addData("Distance to Stone Less than 11 inches ", robot.FrontLookie.getDistance(DistanceUnit.INCH));
         telemetry.addData("FirstTime Flag ", firstTime);
         telemetry.update();
@@ -406,14 +411,14 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
     private boolean firstTimeMove(int strafeCount, double firstTimeDist) {
 
         //Go forward slightly so the robot doesn't touch the wall
-        encoderDriveWithoutTime(FORWARD_SPEED_1, -.25, -.25, -.25, -.25);
+        encoderDriveWithoutTime(FORWARD_SPEED_2, -.25, -.25, -.25, -.25);
         sleep(SLEEP_25);
         //Strafe to the left so that the right wheel comes right over the first and second tile intersection
 
         double leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
         double finalLeftDist = 5;
         double deltaLeftDist = leftDist - finalLeftDist;
-        encoderDriveWithoutTime(.3, -deltaLeftDist, deltaLeftDist, -deltaLeftDist, deltaLeftDist);
+        encoderDriveWithoutTime(FORWARD_SPEED_2, -deltaLeftDist, deltaLeftDist, -deltaLeftDist, deltaLeftDist);
         sleep(SLEEP_10);
 
 
@@ -435,7 +440,7 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         //sleep(25);
 
         robot.Wrist.setPosition(1);
-        sleep(200);
+        sleep(100);
 
         /*robot.Shoulder.setPosition(0);
         sleep(200);
@@ -443,6 +448,8 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         robot.Wrist.setPosition(1);
         sleep(200);*/
 
+        encoderDriveWithoutTime(FORWARD_SPEED_2, -8, 8, -8, 8);
+        sleep(SLEEP_25);
 
         return true;
     }
@@ -468,9 +475,9 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
 
         double alignRobotDistRight = 2.5;
         double alignRobotDistLeft = 2.25;
-        double alignRobotDistRightLess = 2.5;
+        double alignRobotDistRightLess  = 2.5;
         double alignRobotDistLeftLess = 2.25;
-        if(strafeCount > 3) {
+        /*if(strafeCount > 3) {
             //Since the robot is not strafing correctly, we put this so the right_top wheel moves so the robot becomes straight
             //telemetry.addData("The Robot is going forward (right_top and right_bottom)", "");
             //telemetry.update();
@@ -479,11 +486,11 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
             //telemetry.addData("The Robot finished going forward", "");
             //telemetry.update();
             //sleep(2000);
-        }
-        if (strafeCount == 3 ) {
+        }*/
+        /*if (strafeCount == 3 ) {
             sleep(SLEEP_25);
             encoderDriveWithoutTime(-FORWARD_SPEED_2, alignRobotDistLeftLess, -alignRobotDistRightLess, -alignRobotDistRightLess, alignRobotDistLeftLess);
-        }
+        }*/
         //stop();
         //double x = translation.get(0) / mmPerInch;
         telemetry.addData("Going Forward toward stone","");
@@ -499,7 +506,7 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
 
         //encoderDrive(-0.25, x, x, x, x, 0.55);
         encoderDriveWithoutTime(-FORWARD_SPEED_1, x, x, x, x);
-        sleep(SLEEP_50);
+        sleep(SLEEP_25);
 
         return true;
     }
@@ -707,7 +714,23 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
         double deltaBackDist = backDist - finalBackDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
         sleep(SLEEP_25);
-        double finalLeftDist = 98;
+        double finalLeftDist = 90;
+        double deltaLeftDist = finalLeftDist - leftDist;
+        encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
+        sleep(SLEEP_25);
+
+        return true;
+    }
+
+    public boolean transferSecondStone() {
+        double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
+        double leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
+
+        double finalBackDist = 20;
+        double deltaBackDist = backDist - finalBackDist;
+        encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
+        sleep(SLEEP_25);
+        double finalLeftDist = 86;
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
         sleep(SLEEP_25);
@@ -726,67 +749,113 @@ public class GimliAutoSkyStonesRedAllianceWithSensor extends LinearOpMode {
 
 
         double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
-        double leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
+        double leftDist = 86;
+
+        double finalBackDist = 16;
+        double deltaBackDist = backDist - finalBackDist;
+        encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
+        sleep(SLEEP_10);
+        robot.Wrist.setPosition(0);
+        sleep(SLEEP_25);
+        double finalLeftDist = 53;
+        telemetry.addData("This is how much the left lookie reads: ", leftDist);
+        telemetry.update();
+        //sleep(10000);
+        //stop();
+        double deltaLeftDist = finalLeftDist - leftDist;
+        encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
+        sleep(SLEEP_25);
+        /*leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
+        telemetry.addData("This is what the Lookie can see: %d", leftDist);
+        telemetry.update();
+        sleep(200);*/
+
+
+        return true;
+    }
+    public boolean parkSecondStoneUnderBridge() {
+
+
+        double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
+        double leftDist = 86;
 
         double finalBackDist = 24;
         double deltaBackDist = backDist - finalBackDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
-        sleep(SLEEP_50);
+        sleep(SLEEP_10);
         robot.Wrist.setPosition(0);
-        sleep(100);
+        sleep(SLEEP_25);
         double finalLeftDist = 63;
+        telemetry.addData("This is how much the left lookie reads: ", leftDist);
+        telemetry.update();
+        //sleep(10000);
+        //stop();
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
         sleep(SLEEP_25);
+        /*leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
+        telemetry.addData("This is what the Lookie can see: %d", leftDist);
+        telemetry.update();
+        sleep(200);*/
+
 
         return true;
     }
     public boolean pickSecondStone(int strafeCount) {
 
+        //encoderDriveWithoutTime(FORWARD_SPEED_2, 8, 8, 8, 8);
+        //sleep(SLEEP_25);
+        //encoderDriveWithoutTime(FORWARD_SPEED_2, -10, 10, -10, 10);
+        //sleep(SLEEP_25);
+        //adjustRobotPosition(strafeCount);
+
         double backDist = robot.BackLookie.getDistance(DistanceUnit.INCH);
         double leftDist = robot.LeftLookie.getDistance(DistanceUnit.INCH);
+        telemetry.addData("This is what the Lookie can see: %d", leftDist);
+        telemetry.update();
+        sleep(200);
         double finalLeftDist = 28;
 
         double finalBackDist = 24;
         double deltaBackDist = backDist - finalBackDist;
-        encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
+        /*encoderDriveWithoutTime(FORWARD_SPEED_2, deltaBackDist, deltaBackDist, deltaBackDist, deltaBackDist);
         sleep(SLEEP_50);
         robot.Wrist.setPosition(0);
         sleep(100);
-
-        if(strafeCount > 1 && strafeCount <= 3)
+        */
+        //Second SkyStone is in 1st position
+        if(strafeCount > 2 && strafeCount <= 4)
         {
             //Basically the second skystone is in the first position
-            finalLeftDist = 1;
-            double deltaLeftDist = finalLeftDist - leftDist;
-            encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
-            sleep(SLEEP_25);
-
-            //Drive forward 4 inches
-            encoderDriveWithoutTime(-FORWARD_SPEED_2, -4, -4, -4, -4);
-            sleep(SLEEP_25);
-            moveTowardsStone(strafeCount,true);
-
-            adjustRobotPosition(strafeCount);
-
-
-            pickStone(strafeCount);
-
-            transferStone();
-
-            dropStone(strafeCount);
-
-
-            parkUnderBridge();
-
-            stop();
-
+            finalLeftDist = 0.25;
+            //stop();
         }
-        //Second Stone is in 5th or 6th Position
+        //Second SkyStone is in 5th
+        else if(strafeCount == 0)
+        {
+            finalLeftDist = 33;
+        }
+        //Second SkyStone is in 6th position
+        else
+        {
+            finalLeftDist = 41;
+        }
         double deltaLeftDist = finalLeftDist - leftDist;
         encoderDriveWithoutTime(FORWARD_SPEED_2, deltaLeftDist, -deltaLeftDist, deltaLeftDist, -deltaLeftDist);
+        robot.Wrist.setPosition(1);
+        sleep(200);
+        //Drive forward 4 inches
+        encoderDriveWithoutTime(-FORWARD_SPEED_1, -14, -14, -14, -14);
+        sleep(SLEEP_25);
+        //moveTowardsStone(strafeCount,true);
 
+        pickStone(strafeCount);
 
+        transferStone();
+
+        dropStone(strafeCount);
+
+        parkSecondStoneUnderBridge();
 
         return true;
     }

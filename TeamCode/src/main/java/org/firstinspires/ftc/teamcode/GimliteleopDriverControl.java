@@ -35,6 +35,7 @@ public class GimliteleopDriverControl extends LinearOpMode {
         waitForStart();
         int Timesused = 0;
         int FirstTime = 0;
+        int encoderPos = 0;
 
 
 
@@ -150,38 +151,42 @@ public class GimliteleopDriverControl extends LinearOpMode {
                 robot.Shoulder.setPosition(1);
             }
             if (gamepad1.y) {
-                if (FirstTime == 0){
+                if (encoderPos == 0){
                     encoderSlider(0.3,1,4);
-                    FirstTime ++;
+                    encoderPos ++;
                     Timesused ++;
                 }
-               else {
-                   encoderSlider(0.3,7,10);
-                   Timesused += 7;
+                if (encoderPos > 0) {
+                   encoderPos ++;
+                   encoderSlider(0.3,encoderPos,10);
+                   Timesused += 1;
+
                 }
 
-            } else if (gamepad1.a) {
+            }
+            if (gamepad1.a) {
 
-                if (Timesused > 1) {
-                    Timesused -= 7;
-                    encoderSlider(.3, 7, 10);
+                if (encoderPos == 0) {
+                    encoderSlider(.3, -1, 10);
+                    if(Timesused != 0)
+                        Timesused -= 1;
                 }
-                else
+                if (encoderPos > 0)
                 {
+                    encoderPos -= 1;
                     Timesused -= 1;
-                    encoderSlider(.3, 1, 2);
+                    encoderSlider(.3, -1, 2);
                 }
 
             }
 
             if (gamepad1.x) {
-                encoderSlider(.3,Timesused,12);
+                encoderSlider(.3,-Timesused,12);
                 Timesused =0;
             }
 
             if (gamepad1.b) {
-                encoderSlider(.3,Timesused,12);
-                FirstTime = 0;
+                encoderPos = 0;
                 Timesused= 0;
             }
             if (gamepad1.dpad_down) {
