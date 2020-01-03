@@ -22,16 +22,16 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
         robot.init(hardwareMap);
         //Declare varibles
         double Speed = 0.5;
-        double InchesForeward = robot.BackLookie.getDistance(DistanceUnit.INCH);
+        double InchesForeward = 0;
         double InchesBack = 0;
-        double InchesSideWays = -52;
+        double InchesSideWays = 0;
         waitForStart();
             encoderDrive(Speed,12,12,12,12,12);
             encoderDrive(Speed,-12,12,-12, 12,12);
             //robot.Slider.setPower(0.4);
         robot.Grabee.setPosition(0.0);
             sleep(100);
-            //robot.Slider.setPower(0);
+            InchesForeward = robot.BackLookie.getDistance(DistanceUnit.INCH);
             encoderDrive(Speed, InchesForeward, InchesForeward, InchesForeward, InchesForeward, 6);
             //grabs foundation w/ slider
             robot.Grabee.setPosition(0.7);
@@ -47,6 +47,7 @@ public class FoundationBridgeGimliAustoRed extends LinearOpMode {
             sleep(1000);
             //robot.Slider.setPower(0);
             //robot.Shoulder.setPosition(.5);
+            InchesSideWays = 72 - robot.LeftLookie.getDistance(DistanceUnit.INCH);
             encoderDrive(Speed, -InchesSideWays, InchesSideWays, -InchesSideWays, InchesSideWays, 9);
 
     }
